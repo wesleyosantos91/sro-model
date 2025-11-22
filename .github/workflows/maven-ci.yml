@@ -1,0 +1,121 @@
+name: Maven CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up JDK 25
+        uses: actions/setup-java@v4
+        with:
+          java-version: '25'
+          distribution: 'temurin'
+          cache: maven
+      
+      - name: Build with Maven
+        run: mvn -B clean compile
+      
+      - name: Run tests
+        run: mvn -B test
+      
+      - name: Generate JaCoCo coverage report
+        run: mvn -B jacoco:report
+      
+      - name: Run PIT mutation tests
+        run: mvn -B org.pitest:pitest-maven:mutationCoverage
+        continue-on-error: true
+      
+      - name: Verify quality gates
+        run: mvn -B verify jacoco:check
+        continue-on-error: true
+      
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./target/site/jacoco/jacoco.xml
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+      
+      - name: Generate JaCoCo Badge
+        id: jacoco
+        uses: cicirello/jacoco-badge-generator@v2
+        with:
+          jacoco-csv-file: target/site/jacoco/jacoco.csv
+          badges-directory: .github/badges
+          generate-branches-badge: true
+          generate-summary: true
+      
+      - name: Extract PIT coverage
+        id: pit
+        run: |
+          if [ -f target/pit-reports/mutations.xml ]; then
+            MUTATION_COVERAGE=$(grep -oP 'mutationCoverage>\K[^<]+' target/pit-reports/mutations.xml | head -1 || echo "0")
+            LINE_COVERAGE=$(grep -oP 'lineCoverage>\K[^<]+' target/pit-reports/mutations.xml | head -1 || echo "0")
+            echo "MUTATION_COVERAGE=$MUTATION_COVERAGE" >> $GITHUB_OUTPUT
+            echo "LINE_COVERAGE=$LINE_COVERAGE" >> $GITHUB_OUTPUT
+            echo "Mutation Coverage: $MUTATION_COVERAGE%"
+            echo "Line Coverage: $LINE_COVERAGE%"
+          else
+            echo "MUTATION_COVERAGE=0" >> $GITHUB_OUTPUT
+            echo "LINE_COVERAGE=0" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Create PIT Badge
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: ${{ secrets.GIST_ID }}
+          filename: sro-pit-mutation.json
+          label: mutation
+          message: ${{ steps.pit.outputs.MUTATION_COVERAGE }}%
+          color: ${{ steps.pit.outputs.MUTATION_COVERAGE >= 80 && 'brightgreen' || steps.pit.outputs.MUTATION_COVERAGE >= 60 && 'yellow' || 'red' }}
+      
+      - name: Log coverage summary
+        run: |
+          echo "## 📊 Coverage Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Coverage |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|----------|" >> $GITHUB_STEP_SUMMARY
+          echo "| JaCoCo Lines | ${{ steps.jacoco.outputs.coverage }}% |" >> $GITHUB_STEP_SUMMARY
+          echo "| JaCoCo Branches | ${{ steps.jacoco.outputs.branches }}% |" >> $GITHUB_STEP_SUMMARY
+          echo "| PIT Mutation | ${{ steps.pit.outputs.MUTATION_COVERAGE }}% |" >> $GITHUB_STEP_SUMMARY
+          echo "| PIT Line Coverage | ${{ steps.pit.outputs.LINE_COVERAGE }}% |" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Commit and push badges
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .github/badges/*.svg || true
+          git diff --quiet && git diff --staged --quiet || (git commit -m "📊 Update coverage badges [skip ci]" && git push)
+      
+      - name: Comment PR with coverage
+        if: github.event_name == 'pull_request'
+        uses: madrapps/jacoco-report@v1.6.1
+        with:
+          paths: ${{ github.workspace }}/target/site/jacoco/jacoco.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 80
+          min-coverage-changed-files: 80
+      
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            target/surefire-reports/
+            target/site/jacoco/
+            target/pit-reports/
+          retention-days: 30
