@@ -43,12 +43,12 @@
 
     <distributionManagement>
         <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <id>central</id>
+            <url>https://central.sonatype.com/api/v1/publisher</url>
         </repository>
         <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <id>central</id>
+            <url>https://central.sonatype.com/api/v1/publisher</url>
         </snapshotRepository>
     </distributionManagement>
 
@@ -221,31 +221,7 @@
                 </executions>
             </plugin>
 
-            <!-- Maven Javadoc Plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.6.3</version>
-                <configuration>
-                    <source>25</source>
-                    <release>25</release>
-                    <additionalOptions>--enable-preview</additionalOptions>
-                    <show>public</show>
-                    <encoding>UTF-8</encoding>
-                    <charset>UTF-8</charset>
-                    <docencoding>UTF-8</docencoding>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Maven Source Plugin -->
+            <!-- Maven Source Plugin (OBRIGATÓRIO para Maven Central) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -253,9 +229,35 @@
                 <executions>
                     <execution>
                         <id>attach-sources</id>
+                        <phase>verify</phase>
                         <goals>
                             <goal>jar-no-fork</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Maven Javadoc Plugin (OBRIGATÓRIO para Maven Central) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.3</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <source>25</source>
+                            <release>25</release>
+                            <additionalOptions>--enable-preview</additionalOptions>
+                            <show>public</show>
+                            <encoding>UTF-8</encoding>
+                            <charset>UTF-8</charset>
+                            <docencoding>UTF-8</docencoding>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -326,16 +328,16 @@
                         </executions>
                     </plugin>
 
-                    <!-- Nexus Staging Plugin -->
+                    <!-- Central Publishing Maven Plugin -->
                     <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.13</version>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>0.6.0</version>
                         <extensions>true</extensions>
                         <configuration>
-                            <serverId>ossrh</serverId>
-                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                            <publishingServerId>central</publishingServerId>
+                            <autoPublish>true</autoPublish>
+                            <waitUntil>published</waitUntil>
                         </configuration>
                     </plugin>
                 </plugins>
