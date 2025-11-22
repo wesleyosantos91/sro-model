@@ -3,6 +3,13 @@
 [![Java](https://img.shields.io/badge/Java-25-orange.svg)](https://openjdk.org/)
 [![Maven](https://img.shields.io/badge/Maven-3.9+-blue.svg)](https://maven.apache.org/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](LICENSE)
+[![Maven CI](https://github.com/wesleyosantos91/sro-model/actions/workflows/maven-ci.yml/badge.svg)](https://github.com/wesleyosantos91/sro-model/actions/workflows/maven-ci.yml)
+
+## 📊 Code Coverage
+
+![Coverage](.github/badges/jacoco.svg)
+![Branches](.github/badges/branches.svg)
+![Mutation Testing](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/wesleyosantos91/e56e621680d84ff91e75e1a5ed197c80/raw/sro-pit-mutation.json)
 
 ## 🎯 Sobre o Projeto
 
