@@ -10,7 +10,7 @@ O processo de transformação da aba **MOVIMENTO_PREMIO** do Excel em classes Ja
 
 ### Classe Java Gerada
 
-**Pacote:** `br.com.sro.model.movimentopremio`
+**Pacote:** `io.github.wesleyosantos91.susep.sro.model.movimentopremio`
 
 | Classe | Tipo | Campos | JavaDoc | Descrição |
 |--------|------|--------|---------|-----------|
@@ -83,7 +83,7 @@ CONTABILIDADE + FATURAMENTO (Downstream)
 
 ```
 sro/
-├── src/main/java/br/com/sro/model/
+├── src/main/java/io/github/wesleyosantos91/susep/sro/model/
 │   ├── documento/           (15 classes)
 │   ├── endosso/             (2 classes)
 │   └── movimentopremio/     (1 classe) ✅

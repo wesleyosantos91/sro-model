@@ -667,7 +667,7 @@ invariant: if (pais == "BRA")
 ### Camada de Domínio (Domain Layer)
 
 ```
-br.com.sro.model.documento/
+io.github.wesleyosantos91.susep.sro.model.documento/
 ├── Documento.java              (Aggregate Root)
 ├── Segurado.java               (Entity)
 ├── Beneficiario.java           (Entity)
@@ -684,7 +684,7 @@ br.com.sro.model.documento/
 ### Camada de Aplicação (Application Layer)
 
 ```
-br.com.sro.application/
+io.github.wesleyosantos91.susep.sro.application/
 ├── DocumentoService.java       (Application Service)
 ├── EmissaoApoliceUseCase.java  (Use Case)
 ├── AlteracaoApoliceUseCase.java
@@ -694,7 +694,7 @@ br.com.sro.application/
 ### Camada de Infraestrutura (Infrastructure Layer)
 
 ```
-br.com.sro.infrastructure/
+io.github.wesleyosantos91.susep.sro.infrastructure/
 ├── repository/
 │   └── DocumentoRepositoryImpl.java
 ├── messaging/

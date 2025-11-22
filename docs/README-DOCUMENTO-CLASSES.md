@@ -9,7 +9,7 @@ do arquivo Excel de especificação do SRO (Sistema de Registro de Operações) 
 objetos segurados, coberturas, prêmios e relacionamentos com pessoas envolvidas.
 
 **Tecnologia:** Java 25 Records  
-**Package:** `br.com.sro.model.documento`  
+**Package:** `io.github.wesleyosantos91.susep.sro.model.documento`  
 **Total de Classes:** 15 records
 
 ---
@@ -421,7 +421,7 @@ import java.util.List;
 ## 📦 Estrutura de Arquivos
 
 ```
-src/main/java/br/com/sro/model/documento/
+src/main/java/io/github/wesleyosantos91/susep/sro/model/documento/
 ├── Documento.java                    (Classe principal)
 ├── Ccg.java
 ├── Segurado.java

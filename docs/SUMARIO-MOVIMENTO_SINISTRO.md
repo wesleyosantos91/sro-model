@@ -2,7 +2,7 @@
 
 ## 📊 Resultados
 
-**Pacote:** `br.com.sro.model.movimentosinistro`
+**Pacote:** `io.github.wesleyosantos91.susep.sro.model.movimentosinistro`
 
 | Classe | Tipo | Campos |
 |--------|------|--------|

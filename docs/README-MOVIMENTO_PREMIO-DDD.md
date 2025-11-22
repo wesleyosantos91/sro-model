@@ -44,7 +44,7 @@ do Sistema de Registro de Operações (SRO) versão 2.0.0 da SUSEP.
 
 ### Aggregate Root: MovimentoPremio
 
-**Classe:** `br.com.sro.model.movimentopremio.MovimentoPremio`
+**Classe:** `io.github.wesleyosantos91.susep.sro.model.movimentopremio.MovimentoPremio`
 
 **Responsabilidade:** Garantir consistência de cada movimentação financeira.
 

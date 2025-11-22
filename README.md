@@ -20,7 +20,7 @@ Modelo de dados Java baseado na **especificação SUSEP SRO v2.0.0** (Sistema de
 O projeto está organizado em **7 bounded contexts**, cada um representando uma aba da especificação SUSEP:
 
 ```
-br.com.sro.model
+io.github.wesleyosantos91.susep.sro.model
 ├── 📦 documento         (15 classes) - Apólices e bilhetes de seguro
 ├── 📦 endosso           (2 classes)  - Alterações em apólices
 ├── 📦 movimentopremio   (1 classe)   - Movimentações financeiras de prêmios
@@ -30,7 +30,7 @@ br.com.sro.model
 └── 📦 sinistro          (6 classes)  - Processos de sinistro
 ```
 
-**Total:** 35 classes Java Record com JavaDoc completo
+**Total:** 36 classes Java Record com JavaDoc completo e utilitários de validação
 
 ## 🚀 Tecnologias
 
@@ -81,9 +81,14 @@ mvn javadoc:javadoc
 ### Exemplo de Código
 
 ```java
-import br.com.sro.model.documento.*;
+import io.github.wesleyosantos91.susep.sro.model.documento.*;
+import io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+// Validar CPF/CNPJ antes de criar objetos
+ValidationUtils.validateCpf("12345678901");
+ValidationUtils.validateCnpj("12345678000195");
 
 // Criar uma apólice
 var documento = new Documento(
@@ -188,9 +193,10 @@ Cada campo contém metadados SUSEP:
 
 ## 📊 Estatísticas
 
-- **35 classes Java** (100% Records)
-- **20 arquivos de documentação**
-- **7 bounded contexts**
+- **36 classes Java** (100% Records)
+- **207 testes unitários** (100% passing)
+- **7 bounded contexts** (DDD)
+- **90% line coverage** | **82% branch coverage** | **94% mutation score**
 - **100% cobertura de JavaDoc**
 - **Zero dependências runtime**
 
@@ -198,14 +204,15 @@ Cada campo contém metadados SUSEP:
 
 ```
 sro/
-├── src/main/java/br/com/sro/model/    # Classes Java 25 Records
+├── src/main/java/io/github/wesleyosantos91/susep/sro/model/  # Classes Java 25 Records
 │   ├── documento/                      # 15 classes
 │   ├── endosso/                        # 2 classes
 │   ├── movimentopremio/                # 1 classe
 │   ├── ccg/                            # 4 classes
 │   ├── complauto/                      # 4 classes
 │   ├── movimentosinistro/              # 3 classes
-│   └── sinistro/                       # 6 classes
+│   ├── sinistro/                       # 6 classes
+│   └── util/                           # 1 classe (ValidationUtils)
 ├── docs/                               # Documentação completa
 │   ├── README-*-CLASSES.md            # Documentação das classes
 │   ├── README-*-DDD.md                # Análise DDD
@@ -272,6 +279,7 @@ Este projeto está sob a licença Apache 2.0 - veja o arquivo [LICENSE](LICENSE)
 - ✅ ValidationUtils com CPF/CNPJ, UUID, ISO 4217/3166-1
 - ✅ Compact constructors com fail-fast
 - ✅ 100% JavaDoc coverage
+- ✅ Pacote refatorado para Maven Central (`io.github.wesleyosantos91.susep.sro.model`)
 
 ##### 📊 Quality Metrics
 - ✅ **90% cobertura de linhas** (meta: 80%)
@@ -281,14 +289,20 @@ Este projeto está sob a licença Apache 2.0 - veja o arquivo [LICENSE](LICENSE)
 - ✅ Badges automáticos de cobertura
 
 ##### 📦 Pacotes Implementados
-- `br.com.sro.model.documento` (15 classes) - Apólices e bilhetes
-- `br.com.sro.model.endosso` (2 classes) - Alterações contratuais
-- `br.com.sro.model.movimentopremio` (1 classe) - Prêmios
-- `br.com.sro.model.ccg` (4 classes) - Crédito com Garantia
-- `br.com.sro.model.complauto` (4 classes) - Complemento Automóvel
-- `br.com.sro.model.movimentosinistro` (3 classes) - Movimentos de sinistro
-- `br.com.sro.model.sinistro` (6 classes) - Processos de sinistro
-- `br.com.sro.model.util` (1 classe) - Utilitários de validação
+- `io.github.wesleyosantos91.susep.sro.model.documento` (15 classes) - Apólices e bilhetes
+- `io.github.wesleyosantos91.susep.sro.model.endosso` (2 classes) - Alterações contratuais
+- `io.github.wesleyosantos91.susep.sro.model.movimentopremio` (1 classe) - Prêmios
+- `io.github.wesleyosantos91.susep.sro.model.ccg` (4 classes) - Crédito com Garantia
+- `io.github.wesleyosantos91.susep.sro.model.complauto` (4 classes) - Complemento Automóvel
+- `io.github.wesleyosantos91.susep.sro.model.movimentosinistro` (3 classes) - Movimentos de sinistro
+- `io.github.wesleyosantos91.susep.sro.model.sinistro` (6 classes) - Processos de sinistro
+- `io.github.wesleyosantos91.susep.sro.model.util` (1 classe) - Utilitários de validação
+
+##### 🔄 Refatoração para Maven Central
+- ✅ Mudança de groupId: `br.com.sro` → `io.github.wesleyosantos91.susep.sro`
+- ✅ Estrutura de pacotes alinhada com convenções do Maven Central
+- ✅ Configuração OSSRH para publicação
+- ✅ Todos os testes e métricas de qualidade mantidos após refatoração
 
 ##### 📚 Documentação
 - ✅ README completo com exemplos

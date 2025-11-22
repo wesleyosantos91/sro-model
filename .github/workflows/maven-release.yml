@@ -73,7 +73,7 @@ jobs:
           echo "## 📦 Maven Coordinates" >> $GITHUB_OUTPUT
           echo '```xml' >> $GITHUB_OUTPUT
           echo '<dependency>' >> $GITHUB_OUTPUT
-          echo '    <groupId>br.com.sro</groupId>' >> $GITHUB_OUTPUT
+          echo '    <groupId>io.github.wesleyosantos91.susep.sro</groupId>' >> $GITHUB_OUTPUT
           echo '    <artifactId>sro-model</artifactId>' >> $GITHUB_OUTPUT
           echo '    <version>${{ steps.get_version.outputs.VERSION }}</version>' >> $GITHUB_OUTPUT
           echo '</dependency>' >> $GITHUB_OUTPUT

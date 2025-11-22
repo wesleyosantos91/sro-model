@@ -25,7 +25,7 @@ do arquivo Excel de especificação do SRO (Sistema de Registro de Operações) 
 
 ## Classe Principal: MovimentoPremio
 
-**Package:** `br.com.sro.model.movimentopremio`
+**Package:** `io.github.wesleyosantos91.susep.sro.model.movimentopremio`
 
 Representa uma movimentação financeira de prêmio com todos os seus atributos.
 

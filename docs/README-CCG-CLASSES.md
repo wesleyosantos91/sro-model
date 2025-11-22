@@ -10,7 +10,7 @@ Este documento detalha as classes Java geradas a partir da aba **CCG** (Contrato
 
 ## 🏗️ Estrutura de Classes
 
-### Pacote: `br.com.sro.model.ccg`
+### Pacote: `io.github.wesleyosantos91.susep.sro.model.ccg`
 
 | Classe | Tipo | Campos | Descrição |
 |--------|------|--------|-----------|

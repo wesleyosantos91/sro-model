@@ -11,7 +11,7 @@ O processo de transformação da aba **DOCUMENTO** do Excel em classes Java 25 f
 ### 📁 Estrutura de Diretórios
 ```
 /Users/wesleysantos/Documents/dev/sro/
-├── src/main/java/br/com/sro/model/documento/    ✅ Criado
+├── src/main/java/io/github/wesleyosantos91/susep/sro/model/documento/    ✅ Criado
 │   ├── Beneficiario.java                         ✅
 │   ├── BeneficiariosPorCobertura.java           ✅
 │   ├── Ccg.java                                  ✅
@@ -211,7 +211,7 @@ cat README-DDD.md
 
 ### 4. Explorar Código Java
 ```bash
-ls -la src/main/java/br/com/sro/model/documento/
+ls -la src/main/java/io/github/wesleyosantos91/susep/sro/model/documento/
 ```
 
 ---

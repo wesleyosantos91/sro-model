@@ -4,7 +4,7 @@
 
 **Bounded Context:** COMPL_AUTO  
 **Especificação:** SUSEP SRO v2.0.0 - Aba COMPL _AUTO  
-**Pacote Java:** `br.com.sro.model.complauto`  
+**Pacote Java:** `io.github.wesleyosantos91.susep.sro.model.complauto`  
 **Total de Classes:** 4  
 **Total de Campos:** 49
 

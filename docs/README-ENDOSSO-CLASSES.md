@@ -26,7 +26,7 @@ do arquivo Excel de especificação do SRO (Sistema de Registro de Operações) 
 
 ## Classe Principal: Endosso
 
-**Package:** `br.com.sro.model.endosso`
+**Package:** `io.github.wesleyosantos91.susep.sro.model.endosso`
 
 Aggregate root que representa um endosso completo com todos os seus campos e relacionamentos.
 
@@ -80,7 +80,7 @@ Aggregate root que representa um endosso completo com todos os seus campos e rel
 
 ## Classe EndossoAssociado
 
-**Package:** `br.com.sro.model.endosso`
+**Package:** `io.github.wesleyosantos91.susep.sro.model.endosso`
 
 Value object que representa endossos associados ao endosso principal.
 
@@ -100,7 +100,7 @@ Value object que representa endossos associados ao endosso principal.
 
 ## Classes Reutilizadas
 
-As seguintes classes são importadas do pacote `br.com.sro.model.documento` e reutilizadas no contexto de endosso:
+As seguintes classes são importadas do pacote `io.github.wesleyosantos91.susep.sro.model.documento` e reutilizadas no contexto de endosso:
 
 ### Classes de Pessoas
 

@@ -2,7 +2,7 @@
 
 ## 📊 Resultados
 
-**Pacote:** `br.com.sro.model.sinistro`
+**Pacote:** `io.github.wesleyosantos91.susep.sro.model.sinistro`
 
 | Classe | Campos |
 |--------|--------|

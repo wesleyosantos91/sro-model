@@ -43,7 +43,7 @@ do Sistema de Registro de Operações (SRO) versão 2.0.0 da SUSEP.
 
 ### Aggregate Root: Endosso
 
-**Classe:** `br.com.sro.model.endosso.Endosso`
+**Classe:** `io.github.wesleyosantos91.susep.sro.model.endosso.Endosso`
 
 **Responsabilidade:** Garantir consistência de todas as alterações em um documento de seguro.
 
@@ -343,9 +343,9 @@ public class EndossoService {
 **Compartilhamento:** Classes de `Segurado`, `Beneficiario`, `Tomador`, etc.
 
 ```
-br.com.sro.model.documento.*
+io.github.wesleyosantos91.susep.sro.model.documento.*
   ↓ (importado por)
-br.com.sro.model.endosso.Endosso
+io.github.wesleyosantos91.susep.sro.model.endosso.Endosso
 ```
 
 **Decisão:** Reutilizar classes do DOCUMENTO ao invés de duplicar.

@@ -4,7 +4,7 @@
 
 Este documento apresenta as classes Java Record geradas a partir da especificação **SUSEP SRO v2.0.0 - Aba COMPL _AUTO**.
 
-**Pacote:** `br.com.sro.model.complauto`  
+**Pacote:** `io.github.wesleyosantos91.susep.sro.model.complauto`  
 **Total de Classes:** 4  
 **Versão Java:** 25 (Records)
 

@@ -10,7 +10,7 @@ O processo de transformação da aba **ENDOSSO** do Excel em classes Java 25 foi
 
 ### Classes Java Geradas
 
-**Pacote:** `br.com.sro.model.endosso`
+**Pacote:** `io.github.wesleyosantos91.susep.sro.model.endosso`
 
 | Classe | Tipo | Campos | JavaDoc | Descrição |
 |--------|------|--------|---------|-----------|
@@ -21,7 +21,7 @@ O processo de transformação da aba **ENDOSSO** do Excel em classes Java 25 foi
 
 ### Classes Reutilizadas
 
-Importadas de `br.com.sro.model.documento.*`:
+Importadas de `io.github.wesleyosantos91.susep.sro.model.documento.*`:
 
 - `Segurado`, `Beneficiario`, `Tomador`, `Intermediario` (Pessoas)
 - `ObjetoSegurado`, `Cobertura`, `Franquia` (Objetos e Coberturas)
@@ -96,7 +96,7 @@ MOVIMENTO_PREMIO (Downstream)
 
 ```
 sro/
-├── src/main/java/br/com/sro/model/
+├── src/main/java/io/github/wesleyosantos91/susep/sro/model/
 │   ├── documento/           (15 classes - criadas anteriormente)
 │   │   ├── Documento.java
 │   │   ├── Segurado.java

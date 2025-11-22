@@ -10,7 +10,7 @@ O processo de transformação da aba **CCG** (Contrato de Contragarantia) do Exc
 
 ### Classes Java Geradas
 
-**Pacote:** `br.com.sro.model.ccg`
+**Pacote:** `io.github.wesleyosantos91.susep.sro.model.ccg`
 
 | Classe | Tipo | Campos | JavaDoc | Descrição |
 |--------|------|--------|---------|-----------|
@@ -76,7 +76,7 @@ RESSEGURO + CONTABILIDADE (Downstream)
 
 ```
 sro/
-├── src/main/java/br/com/sro/model/
+├── src/main/java/io/github/wesleyosantos91/susep/sro/model/
 │   ├── documento/           (15 classes)
 │   ├── endosso/             (2 classes)
 │   ├── movimentopremio/     (1 classe)
