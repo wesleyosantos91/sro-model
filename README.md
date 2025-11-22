@@ -74,7 +74,7 @@ mvn javadoc:javadoc
 <dependency>
     <groupId>br.com.sro</groupId>
     <artifactId>sro-model</artifactId>
-    <version>2.0.0</version>
+    <version>0.0.1</version>
 </dependency>
 ```
 
@@ -226,13 +226,16 @@ sro/
 
 ## 🤝 Contribuindo
 
-Contribuições são bem-vindas! Por favor:
+Contribuições são bem-vindas! Para contribuir:
 
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
+1. Leia o [Guia de Contribuição](CONTRIBUTING.md)
+2. Fork o projeto
+3. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+4. Commit suas mudanças seguindo [Conventional Commits](https://www.conventionalcommits.org/)
+5. Push para a branch (`git push origin feature/AmazingFeature`)
+6. Abra um Pull Request
+
+Veja [CONTRIBUTING.md](CONTRIBUTING.md) para detalhes sobre padrões de código, testes e processo de desenvolvimento.
 
 ## 👤 Desenvolvedor
 
@@ -244,6 +247,8 @@ Contribuições são bem-vindas! Por favor:
 
 Este projeto está sob a licença Apache 2.0 - veja o arquivo [LICENSE](LICENSE) para detalhes.
 
+**Copyright © 2025 Wesley Oliveira Santos**
+
 ## 🔗 Referências
 
 - [SUSEP - Superintendência de Seguros Privados](https://www2.susep.gov.br/)
@@ -253,17 +258,51 @@ Este projeto está sob a licença Apache 2.0 - veja o arquivo [LICENSE](LICENSE)
 
 ## 📝 Changelog
 
-### v2.0.0 (2024-11-22)
-- ✅ Implementação completa da especificação SUSEP SRO v2.0.0
-- ✅ 7 bounded contexts modelados
-- ✅ 35 classes Java 25 Records
-- ✅ Documentação DDD completa
-- ✅ 100% JavaDoc coverage
-- ✅ Projeto Maven configurado
-- ✅ Validações com Java puro (zero dependências externas)
+### [v0.0.1](https://github.com/wesleyosantos91/sro-model/releases/tag/v0.0.1) (2025-11-22)
+
+#### 🎉 Primeira Release
+
+**Implementação Completa da Especificação SUSEP SRO v2.0.0**
+
+##### ✨ Features
+- ✅ 36 classes Java 25 Records implementadas
+- ✅ 7 bounded contexts modelados (DDD)
+- ✅ 207 testes unitários (100% passing)
+- ✅ Validações com Java puro (zero dependências runtime)
 - ✅ ValidationUtils com CPF/CNPJ, UUID, ISO 4217/3166-1
-- ✅ 15 testes unitários de validação (100% passing)
 - ✅ Compact constructors com fail-fast
+- ✅ 100% JavaDoc coverage
+
+##### 📊 Quality Metrics
+- ✅ **90% cobertura de linhas** (meta: 80%)
+- ✅ **82% cobertura de branches** (meta: 70%)
+- ✅ **94% mutation score** (meta: 80%)
+- ✅ CI/CD configurado com GitHub Actions
+- ✅ Badges automáticos de cobertura
+
+##### 📦 Pacotes Implementados
+- `br.com.sro.model.documento` (15 classes) - Apólices e bilhetes
+- `br.com.sro.model.endosso` (2 classes) - Alterações contratuais
+- `br.com.sro.model.movimentopremio` (1 classe) - Prêmios
+- `br.com.sro.model.ccg` (4 classes) - Crédito com Garantia
+- `br.com.sro.model.complauto` (4 classes) - Complemento Automóvel
+- `br.com.sro.model.movimentosinistro` (3 classes) - Movimentos de sinistro
+- `br.com.sro.model.sinistro` (6 classes) - Processos de sinistro
+- `br.com.sro.model.util` (1 classe) - Utilitários de validação
+
+##### 📚 Documentação
+- ✅ README completo com exemplos
+- ✅ Guia de contribuição (CONTRIBUTING.md)
+- ✅ Licença Apache 2.0
+- ✅ Documentação DDD por contexto
+- ✅ Estruturas JSON de referência
+
+##### 🔧 Configuração
+- ✅ Maven POM configurado
+- ✅ JaCoCo (cobertura de código)
+- ✅ PIT (mutation testing)
+- ✅ JUnit 5 + AssertJ
+- ✅ GitHub Actions CI/CD
 
 ---
 

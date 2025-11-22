@@ -7,7 +7,7 @@
 
     <groupId>br.com.sro</groupId>
     <artifactId>sro-model</artifactId>
-    <version>2.0.0</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
 
     <name>SRO Model</name>
@@ -29,8 +29,8 @@
 
     <licenses>
         <license>
-            <name>MIT License</name>
-            <url>https://opensource.org/licenses/MIT</url>
+            <name>Apache License 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
