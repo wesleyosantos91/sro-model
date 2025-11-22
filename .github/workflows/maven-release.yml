@@ -58,20 +58,18 @@ jobs:
         env:
           MAVEN_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.CENTRAL_TOKEN }}
-          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |
           if [ -n "$MAVEN_USERNAME" ] && [ -n "$MAVEN_PASSWORD" ]; then
             echo "✅ Deploying to Maven Central via Central Portal..."
             echo "✅ GPG signing enabled with key: $GPG_KEY_ID"
             mvn -B deploy -DskipTests -P release \
-              -Dgpg.passphrase="$GPG_PASSPHRASE" \
               -Dgpg.keyname="$GPG_KEY_ID" || {
               echo "❌ Deploy failed"
               exit 1
             }
           else
             echo "⚠️ Maven Central deployment skipped - secrets not configured"
-            echo "Configure: CENTRAL_USERNAME, CENTRAL_TOKEN, GPG_PRIVATE_KEY, GPG_PASSPHRASE"
+            echo "Configure: CENTRAL_USERNAME, CENTRAL_TOKEN, GPG_PRIVATE_KEY"
             echo "Get credentials at: https://central.sonatype.com/account"
             exit 1
           fi
