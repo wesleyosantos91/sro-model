@@ -72,7 +72,7 @@ mvn javadoc:javadoc
 
 ```xml
 <dependency>
-    <groupId>br.com.sro</groupId>
+    <groupId>io.github.wesleyosantos91.susep.sro</groupId>
     <artifactId>sro-model</artifactId>
     <version>0.0.1</version>
 </dependency>
