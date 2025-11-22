@@ -9,17 +9,17 @@ jobs:
   release:
     name: Build and Release to Maven Central
     runs-on: ubuntu-latest
-    
+
     permissions:
       contents: write
       packages: write
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
+
       - name: Set up JDK 25
         uses: actions/setup-java@v4
         with:
@@ -29,65 +29,72 @@ jobs:
           server-id: central
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
-      
-      - name: Import GPG key
+
+      - name: Import GPG private key
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
         run: |
-          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
-          # List keys to verify import
-          echo "📋 Listing imported keys:"
-          gpg --list-secret-keys --keyid-format LONG
-          # Extract key ID - using fingerprint method which is more reliable
-          KEY_ID=$(gpg --list-secret-keys --with-colons | grep '^fpr' | head -1 | cut -d: -f10)
-          if [ -z "$KEY_ID" ]; then
-            echo "❌ Failed to extract GPG key ID"
-            echo "Trying alternative method..."
-            KEY_ID=$(gpg --list-secret-keys --keyid-format LONG | awk '/^sec/ {sub(/.*\//, "", $2); sub(/\s.*/, "", $2); print $2}' | head -1)
-          fi
-          if [ -z "$KEY_ID" ]; then
-            echo "❌ Still failed to extract GPG key ID"
-            echo "Full output:"
-            gpg --list-secret-keys --keyid-format LONG
-            gpg --list-secret-keys --with-colons
+          mkdir -p ~/.gnupg
+          chmod 700 ~/.gnupg
+
+          if [ -z "$GPG_PRIVATE_KEY" ]; then
+            echo "❌ GPG_PRIVATE_KEY secret is not set."
             exit 1
           fi
+
+          echo "$GPG_PRIVATE_KEY" | gpg --batch --import
+
+          echo "📋 Listing imported secret keys:"
+          gpg --list-secret-keys --keyid-format LONG || true
+
+          # Extrai fingerprint da secret key (formato com colons é mais estável)
+          KEY_ID=$(gpg --list-secret-keys --with-colons | awk -F: '/^fpr:/ {print $10; exit}')
+          if [ -z "$KEY_ID" ]; then
+            echo "❌ Failed to extract GPG key ID from secret keys"
+            echo "Debugging output:"
+            gpg --list-secret-keys --keyid-format LONG || true
+            gpg --list-secret-keys --with-colons || true
+            exit 1
+          fi
+
           echo "GPG_KEY_ID=$KEY_ID" >> $GITHUB_ENV
-          echo "✅ Using GPG key ID: $KEY_ID"
-      
+          echo "✅ Using GPG key ID (fingerprint): $KEY_ID"
+
       - name: Extract version from tag
         id: get_version
         run: |
           VERSION=${GITHUB_REF#refs/tags/v}
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
           echo "Releasing version: $VERSION"
-      
+
       - name: Update pom.xml version
         run: |
           mvn versions:set -DnewVersion=${{ steps.get_version.outputs.VERSION }}
           mvn versions:commit
-      
+
       - name: Build and package
         run: mvn -B clean package -DskipTests
-      
+
       - name: Deploy to Maven Central
         env:
           MAVEN_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.CENTRAL_TOKEN }}
         run: |
-          if [ -n "$MAVEN_USERNAME" ] && [ -n "$MAVEN_PASSWORD" ]; then
-            echo "✅ Deploying to Maven Central via Central Portal..."
-            echo "✅ GPG signing enabled with key: $GPG_KEY_ID"
-            mvn -B deploy -DskipTests -P release \
-              -Dgpg.keyname="$GPG_KEY_ID" || {
-              echo "❌ Deploy failed"
-              exit 1
-            }
-          else
+          if [ -z "$MAVEN_USERNAME" ] || [ -z "$MAVEN_PASSWORD" ]; then
             echo "⚠️ Maven Central deployment skipped - secrets not configured"
             echo "Configure: CENTRAL_USERNAME, CENTRAL_TOKEN, GPG_PRIVATE_KEY"
-            echo "Get credentials at: https://central.sonatype.com/account"
             exit 1
           fi
-      
+
+          echo "✅ Deploying to Maven Central via Central Portal..."
+          echo "✅ GPG signing enabled with key: $GPG_KEY_ID"
+
+          mvn -B deploy -DskipTests -P release \
+            -Dgpg.keyname="$GPG_KEY_ID" || {
+            echo "❌ Deploy failed"
+            exit 1
+          }
+
       - name: Generate release notes
         id: release_notes
         run: |
@@ -97,7 +104,7 @@ jobs:
           echo '<dependency>' >> $GITHUB_OUTPUT
           echo '    <groupId>io.github.wesleyosantos91.susep.sro</groupId>' >> $GITHUB_OUTPUT
           echo '    <artifactId>sro-model</artifactId>' >> $GITHUB_OUTPUT
-          echo '    <version>${{ steps.get_version.outputs.VERSION }}</version>' >> $GITHUB_OUTPUT
+          echo "    <version>${{ steps.get_version.outputs.VERSION }}</version>" >> $GITHUB_OUTPUT
           echo '</dependency>' >> $GITHUB_OUTPUT
           echo '```' >> $GITHUB_OUTPUT
           echo "" >> $GITHUB_OUTPUT
@@ -105,7 +112,7 @@ jobs:
           git log $(git describe --tags --abbrev=0 HEAD^)..HEAD --pretty=format:"- %s (%h)" >> $GITHUB_OUTPUT
           echo "" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
-      
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
@@ -119,7 +126,7 @@ jobs:
             target/sro-model-${{ steps.get_version.outputs.VERSION }}-javadoc.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
