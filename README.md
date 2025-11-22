@@ -9,7 +9,7 @@
 
 ![Coverage](.github/badges/jacoco.svg)
 ![Branches](.github/badges/branches.svg)
-![Mutation Testing](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/wesleyosantos91/e56e621680d84ff91e75e1a5ed197c80/raw/sro-pit-mutation.json)
+[![Mutation Testing](https://img.shields.io/badge/mutation-94%25-brightgreen.svg)](https://github.com/wesleyosantos91/sro-model/actions)
 
 ## 🎯 Sobre o Projeto
 
@@ -167,7 +167,6 @@ Cada campo contém metadados SUSEP:
 - **Datas** - Validações de sequência e regras temporais
 - **Ranges** - Validações de domínio e limites
 - **Imutabilidade** - Listas defensively copied
-- **15 testes unitários** - Cobertura de validações críticas
 
 ## 🏛️ Arquitetura
 
