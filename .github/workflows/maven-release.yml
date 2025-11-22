@@ -33,16 +33,25 @@ jobs:
       - name: Import GPG key
         run: |
           echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+          # List keys to verify import
+          echo "📋 Listing imported keys:"
           gpg --list-secret-keys --keyid-format LONG
-          # Get the key ID and set it for maven
-          KEY_ID=$(gpg --list-secret-keys --keyid-format LONG | grep -E "^sec" | head -1 | awk '{print $2}' | cut -d'/' -f2)
+          # Extract key ID - using fingerprint method which is more reliable
+          KEY_ID=$(gpg --list-secret-keys --with-colons | grep '^fpr' | head -1 | cut -d: -f10)
           if [ -z "$KEY_ID" ]; then
             echo "❌ Failed to extract GPG key ID"
+            echo "Trying alternative method..."
+            KEY_ID=$(gpg --list-secret-keys --keyid-format LONG | awk '/^sec/ {sub(/.*\//, "", $2); sub(/\s.*/, "", $2); print $2}' | head -1)
+          fi
+          if [ -z "$KEY_ID" ]; then
+            echo "❌ Still failed to extract GPG key ID"
+            echo "Full output:"
             gpg --list-secret-keys --keyid-format LONG
+            gpg --list-secret-keys --with-colons
             exit 1
           fi
           echo "GPG_KEY_ID=$KEY_ID" >> $GITHUB_ENV
-          echo "✅ Using GPG key: $KEY_ID"
+          echo "✅ Using GPG key ID: $KEY_ID"
       
       - name: Extract version from tag
         id: get_version
