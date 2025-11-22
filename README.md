@@ -2,6 +2,7 @@
 
 [![Java](https://img.shields.io/badge/Java-25-orange.svg)](https://openjdk.org/)
 [![Maven](https://img.shields.io/badge/Maven-3.9+-blue.svg)](https://maven.apache.org/)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.wesleyosantos91.susep.sro/sro-model)](https://central.sonatype.com/artifact/io.github.wesleyosantos91.susep.sro/sro-model)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](LICENSE)
 [![Maven CI](https://github.com/wesleyosantos91/sro-model/actions/workflows/maven-ci.yml/badge.svg)](https://github.com/wesleyosantos91/sro-model/actions/workflows/maven-ci.yml)
 
