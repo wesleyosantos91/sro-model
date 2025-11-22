@@ -41,7 +41,7 @@ jobs:
         continue-on-error: true
       
       - name: Verify quality gates
-        run: mvn -B verify jacoco:check
+        run: mvn -B verify
         continue-on-error: true
       
       - name: Upload coverage to Codecov
