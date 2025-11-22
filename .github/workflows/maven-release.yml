@@ -30,12 +30,6 @@ jobs:
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
       
-      - name: Import GPG key
-        if: ${{ secrets.GPG_PRIVATE_KEY != '' }}
-        run: |
-          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
-          gpg --list-secret-keys --keyid-format LONG
-      
       - name: Extract version from tag
         id: get_version
         run: |
