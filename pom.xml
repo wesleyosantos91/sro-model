@@ -46,10 +46,6 @@
             <id>central</id>
             <url>https://central.sonatype.com/api/v1/publisher</url>
         </repository>
-        <snapshotRepository>
-            <id>central</id>
-            <url>https://central.sonatype.com/api/v1/publisher</url>
-        </snapshotRepository>
     </distributionManagement>
 
     <properties>
@@ -298,6 +294,19 @@
                             <Specification-Version>2.0.0</Specification-Version>
                         </manifestEntries>
                     </archive>
+                </configuration>
+            </plugin>
+
+            <!-- Central Publishing Maven Plugin (para novo Maven Central) -->
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.5.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>
+                    <waitUntil>published</waitUntil>
                 </configuration>
             </plugin>
         </plugins>
