@@ -34,6 +34,10 @@ jobs:
         run: |
           echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
           gpg --list-secret-keys --keyid-format LONG
+          # Get the key ID and set it for maven
+          KEY_ID=$(gpg --list-secret-keys --keyid-format LONG | grep sec | awk '{print $2}' | cut -d'/' -f2)
+          echo "GPG_KEY_ID=$KEY_ID" >> $GITHUB_ENV
+          echo "Using GPG key: $KEY_ID"
       
       - name: Extract version from tag
         id: get_version
@@ -58,8 +62,10 @@ jobs:
         run: |
           if [ -n "$MAVEN_USERNAME" ] && [ -n "$MAVEN_PASSWORD" ]; then
             echo "✅ Deploying to Maven Central via Central Portal..."
-            echo "✅ GPG signing enabled"
-            mvn -B deploy -DskipTests -P release -Dgpg.passphrase="$GPG_PASSPHRASE" || {
+            echo "✅ GPG signing enabled with key: $GPG_KEY_ID"
+            mvn -B deploy -DskipTests -P release \
+              -Dgpg.passphrase="$GPG_PASSPHRASE" \
+              -Dgpg.keyname="$GPG_KEY_ID" || {
               echo "❌ Deploy failed"
               exit 1
             }
