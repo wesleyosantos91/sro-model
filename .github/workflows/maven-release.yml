@@ -30,6 +30,11 @@ jobs:
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
       
+      - name: Import GPG key
+        run: |
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+          gpg --list-secret-keys --keyid-format LONG
+      
       - name: Extract version from tag
         id: get_version
         run: |
@@ -53,22 +58,16 @@ jobs:
         run: |
           if [ -n "$MAVEN_USERNAME" ] && [ -n "$MAVEN_PASSWORD" ]; then
             echo "✅ Deploying to Maven Central via Central Portal..."
-            
-            # Se não tiver GPG configurado, pular assinatura
-            if [ -z "$GPG_PASSPHRASE" ]; then
-              echo "⚠️  GPG not configured - deploying without signatures"
-              echo "   Maven Central may reject unsigned artifacts"
-              mvn -B deploy -DskipTests -Dgpg.skip=true || echo "⚠️ Deploy failed"
-            else
-              echo "✅ GPG configured - signing artifacts"
-              mvn -B deploy -DskipTests -P release -Dgpg.passphrase="$GPG_PASSPHRASE" || echo "⚠️ Deploy failed"
-            fi
+            echo "✅ GPG signing enabled"
+            mvn -B deploy -DskipTests -P release -Dgpg.passphrase="$GPG_PASSPHRASE" || {
+              echo "❌ Deploy failed"
+              exit 1
+            }
           else
             echo "⚠️ Maven Central deployment skipped - secrets not configured"
-            echo "To enable deployment, configure: CENTRAL_USERNAME, CENTRAL_TOKEN"
-            echo "Optional (recommended): GPG_PRIVATE_KEY, GPG_PASSPHRASE"
-            echo ""
+            echo "Configure: CENTRAL_USERNAME, CENTRAL_TOKEN, GPG_PRIVATE_KEY, GPG_PASSPHRASE"
             echo "Get credentials at: https://central.sonatype.com/account"
+            exit 1
           fi
       
       - name: Generate release notes
