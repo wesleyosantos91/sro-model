@@ -1,0 +1,282 @@
+{
+  "type": "record",
+  "name": "Endosso",
+  "namespace": "io.github.wesleyosantos91.susep.sro.model.endosso",
+  "doc": "Record principal representando um Endosso do SRO. Sistema de Registro de Operações (SRO) - Versão 2.0.0. Este record representa alterações em documentos de seguro (apólices, bilhetes, certificados). Gerado automaticamente a partir da especificação SUSEP.",
+  "fields": [
+    {
+      "name": "uuid",
+      "type": "string",
+      "doc": "Uuid. Identificador único do registro. Cardinalidade: [1..1]. Formato: 7d9b5524-d047-40ee-8f9c-62c0c8e87d8e. Tamanho: 36"
+    },
+    {
+      "name": "anotacao",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Anotação Registro. Campo livre de anotação. Cardinalidade: [0..1]. Tamanho: 500. Observação: Este campo servirá para que as Registradoras utilizem para seu controle interno dos registros e deverá ser retornado no check layout"
+    },
+    {
+      "name": "codigoSeguradora",
+      "type": "string",
+      "doc": "Código da Seguradora. Código Susep da seguradora. Cardinalidade: [1..1]. Tamanho: 5"
+    },
+    {
+      "name": "dataRegistro",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      },
+      "doc": "Data do Registro. Data do registro. Cardinalidade: [1..1]. Formato: ISO 8601 '2021-06-25T18:00:00Z'"
+    },
+    {
+      "name": "dataAlteracao",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      },
+      "doc": "Data da Alteração do Registro. Data da alteração do registro. Cardinalidade: [1..1]. Formato: ISO 8601 '2021-06-25T18:00:00Z'"
+    },
+    {
+      "name": "indicadorExclusao",
+      "type": "int",
+      "doc": "Indicador Exclusão. Indica se é um registro de exclusão. Cardinalidade: [1..1]. Formato: 1 - Sim 2 - Não. Tamanho: 1"
+    },
+    {
+      "name": "tipoDocumentoEndossado",
+      "type": "int",
+      "doc": "Tipo de Documento Emitido. Tipo de Documento Emitido. Cardinalidade: [1..1]. Formato: 1 - Apólice Individual 2 - Apólice Coletiva 3 - Bilhete 4 - Certificado 5 - Apólice Individual Autom... Tamanho: 1. Condição: Validar se o domínio do tipo do documento emitido informado no endosso é o mesmo utilizado no documento endossado (emissão original). Observação: Inclusão de campo Inclusão de domínio Inclusão de condição é idêntico ao campo 'Tipo de Documento Emitido' do leiaute '1 - Documento' pois se refere ao documento endossado."
+    },
+    {
+      "name": "apoliceCodigo",
+      "type": "string",
+      "doc": "Identificador da Apólice / Bilhete. Identificador da apólice ou bilhete. Cardinalidade: [1..1]. Tamanho: 60"
+    },
+    {
+      "name": "numeroSusepApolice",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Número Susep da Apólice. Número SUSEP da apólice, conforme Circular Susep 326. Cardinalidade: [0..1]. Tamanho: 30. Condição: Campo obrigatório para apólices com coberturas do ramo Garantia (0775 e 0776). Observação: Regra de formação: SSSSSAAAAFFFFRRRRNNNNNNN SSSSS Código da sociedade seguradora na SUSEP - 5 dígitos AAAA Ano de emissão da apólice - 4 dígitos FFFF Identificador da sucursal da emissão da apólice"
+    },
+    {
+      "name": "certificadoCodigo",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Identificador do Certificado. Identificador do certificado. Cardinalidade: [0..1]. Tamanho: 60. Condição: Campo obrigatório somente para o Tipo de Documento Endossado = '4, 7 e 10'. Observação: Alteração de condição"
+    },
+    {
+      "name": "endossoCodigo",
+      "type": "string",
+      "doc": "Identificador do Endosso. Identificador do endosso (de qualquer documento). Cardinalidade: [1..1]. Tamanho: 60"
+    },
+    {
+      "name": "endossoDescricao",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Descrição do Endosso. Descrição adicional do endosso. Cardinalidade: [0..1]. Tamanho: 1024. Condição: Obrigatório quando 'Tipo Endosso' for 'Endosso sem Movimentação de Prêmio'. Observação: [Dúvida] A condição descrita para este campo tem algum fundamento ou sentido?"
+    },
+    {
+      "name": "endossoTipo",
+      "type": "int",
+      "doc": "Tipo de Endosso. Tipo de emissão do endosso. Cardinalidade: [1..1]. Formato: 1 - Endosso de cobrança adicional de prêmio 2 - Endosso de restituição de prêmio 3 - Endosso sem mov... Tamanho: 2"
+    },
+    {
+      "name": "endossoAverbavel",
+      "type": "int",
+      "doc": "Endosso Averbável. Indica se o endosso inclui averbações. Cardinalidade: [1.1]. Formato: 1-Sim 2-Não. Tamanho: 2. Observação: Deverá ser preenchido com 1-Sim quando houver Endosso de Averbação de Transporte, demais ramos como 2-Não"
+    },
+    {
+      "name": "tipoEmissao",
+      "type": "int",
+      "doc": "Tipo de Emissão. Tipo de emissão da apólice. Cardinalidade: [1..1]. Formato: 1 - Emissao Própria 2 - Cosseguro Aceito. Tamanho: 2"
+    },
+    {
+      "name": "dataEmissao",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      },
+      "doc": "Data de Emissão. Data de emissão do endosso. Cardinalidade: [1..1]. Formato: AAAA-MM-DD. Tamanho: 10"
+    },
+    {
+      "name": "dataInicio",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      },
+      "doc": "Data de Início de Vigência Endosso. Data de início de vigência do endosso. Cardinalidade: [1..1]. Formato: AAAA-MM-DD. Tamanho: 10"
+    },
+    {
+      "name": "dataTermino",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      },
+      "doc": "Data de Fim de Vigência Endosso. Data de fim de vigência do endosso. Cardinalidade: [1..1]. Formato: AAAA-MM-DD. Tamanho: 10"
+    },
+    {
+      "name": "dataInicioDocumento",
+      "type": ["null", {
+        "type": "int",
+        "logicalType": "date"
+      }],
+      "default": null,
+      "doc": "Data de Início de Vigência Documento. Data de início de vigência do documento. Cardinalidade: [0..1]. Formato: AAAA-MM-DD. Tamanho: 10"
+    },
+    {
+      "name": "dataTerminoDocumento",
+      "type": ["null", {
+        "type": "int",
+        "logicalType": "date"
+      }],
+      "default": null,
+      "doc": "Data de Fim de Vigência Documento. Data de fim de vigência do documento. Cardinalidade: [0..1]. Formato: AAAA-MM-DD. Tamanho: 10"
+    },
+    {
+      "name": "codigoFilial",
+      "type": "string",
+      "doc": "Código da Filial. Código da filial de emissão da apólice. Cardinalidade: [1..1]. Tamanho: 4"
+    },
+    {
+      "name": "codigoSeguradoraLider",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Código da Seguradora Líder. Código da seguradora líder para apólices com arranjo de cosseguro. Cardinalidade: [0..1]. Tamanho: 5. Condição: Obrigatório quando o campo 'Tipo Emisão' for 'Cosseguro Aceito'"
+    },
+    {
+      "name": "apoliceCodigoLider",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Identificador da Apólice Seguradora Líder. Identificador da apólice seguradora líder para apólice de cosseguro aceito. Cardinalidade: [0..1]. Tamanho: 60. Condição: Obrigatório quando o campo 'Tipo Emisão' for 'Cosseguro Aceito'"
+    },
+    {
+      "name": "moedaApolice",
+      "type": "string",
+      "doc": "Moeda da Apólice. Moeda de emissão da apólice. Cardinalidade: [1..1]. Formato: ISO 4217 Exemplo ( 'BRL', 'USD', 'EUR', 'GBP', 'JPY'). Tamanho: 3"
+    },
+    {
+      "name": "limiteMaximoGarantia",
+      "type": "double",
+      "doc": "Limite Máximo de Garantia (LMG). Limite máximo de garantia (LMG). Cardinalidade: [1..1]. Tamanho: 16.2. Condição: Campo não aceita valor negativo. Observação: Quando não for definível o LMG preencher com 0,00"
+    },
+    {
+      "name": "limiteMaximoGarantiaReal",
+      "type": "double",
+      "doc": "Limite Máximo de Garantia (LMG) em Reais. Limite máximo de garantia (LMG) em reais. Cardinalidade: [1..1]. Tamanho: 16.2. Condição: Campo obrigatórios se moeda diferente de Real Campo não aceita valor negativo. Observação: Quando não for definível o LMG preencher com 0,00"
+    },
+    {
+      "name": "coberturaBasica",
+      "type": ["null", "int"],
+      "default": null,
+      "doc": "Indicador de Cobertura Básica. Cardinalidade: [0..1]. Formato: 1 - Simples 2 - Ampla. Tamanho: 1. Condição: Campo obrigatório para apólices com coberturas do ramo Compreensivo Condomínio"
+    },
+    {
+      "name": "endossosAssociados",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "EndossoAssociado",
+          "namespace": "io.github.wesleyosantos91.susep.sro.model.endosso",
+          "doc": "Record representando EndossoAssociado. Tag: endosso_associado. Gerado automaticamente a partir da especificação SRO v2.0.0",
+          "fields": [
+            {
+              "name": "endossoAssociadoCodigo",
+              "type": "string",
+              "doc": "Identificador do Endosso Associado. Identificador do endosso associado. Cardinalidade: [1..1]. Tamanho: 60. Observação: Alteração de cardinalidade"
+            }
+          ]
+        }
+      },
+      "default": [],
+      "doc": "Lista de Endossos Associados. Cardinalidade: [0..N]. Obrigatório para endossos de cancelamento tipo 5 ou 7"
+    },
+    {
+      "name": "ccgs",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "Ccg",
+          "namespace": "io.github.wesleyosantos91.susep.sro.model.endosso",
+          "doc": "Record representando Ccg. Tag: ccg. Gerado automaticamente a partir da especificação SRO v2.0.0",
+          "fields": [
+            {
+              "name": "ccgIdentificacao",
+              "type": "string",
+              "doc": "Identificador do CCG. Identificador do contrato de contragarantia. Cardinalidade: [1..1]. Tamanho: 100. Observação: Este campo faz referência ao identificador do CCG registrado pelo leiaute '4 - CCG'"
+            },
+            {
+              "name": "dataVinculacao",
+              "type": ["null", {
+                "type": "int",
+                "logicalType": "date"
+              }],
+              "default": null,
+              "doc": "Data de Vinculação do CCG. Data de vinculação do contrato de contragarantia. Cardinalidade: [0..1]. Formato: AAAA-MM-DD. Tamanho: 10. Observação: Campo aplicável quando o CCG for vinculado em data posterior ao Registro da Apólice/Endosso."
+            }
+          ]
+        }
+      },
+      "default": [],
+      "doc": "Lista de CCG (Contratos de Contragarantia). Cardinalidade: [0..N]"
+    },
+    {
+      "name": "premioApolice",
+      "type": ["null", {
+        "type": "record",
+        "name": "PremioApolice",
+        "namespace": "io.github.wesleyosantos91.susep.sro.model.endosso",
+        "doc": "Record representando PremioApolice. Tag: premio_apolice. Gerado automaticamente a partir da especificação SRO v2.0.0",
+        "fields": [
+          {
+            "name": "valorTotal",
+            "type": "double",
+            "doc": "Valor Total do Prêmio. Valor total do prêmio da apólice. Cardinalidade: [1..1]. Tamanho: 16.2"
+          },
+          {
+            "name": "valorTotalReal",
+            "type": "double",
+            "doc": "Valor Total do Prêmio em Reais. Valor total do prêmio da apólice em reais. Cardinalidade: [1..1]. Tamanho: 16.2"
+          },
+          {
+            "name": "adicionalFracionamento",
+            "type": ["null", "double"],
+            "default": null,
+            "doc": "Valor Total do Adicional de Fracionamento. Valor total do adicional de fracionamento da apólice. Cardinalidade: [0..1]. Tamanho: 16.2"
+          },
+          {
+            "name": "iof",
+            "type": ["null", "double"],
+            "default": null,
+            "doc": "Valor total do IOF. Valor total do IOF da apólice. Cardinalidade: [0..1]. Tamanho: 16.2"
+          },
+          {
+            "name": "numeroParcelas",
+            "type": "int",
+            "doc": "Quantidade de Parcelas de Prêmio. Quantidade de parcelas de prêmio da apólice. Cardinalidade: [1..1]. Tamanho: 3"
+          }
+        ]
+      }],
+      "default": null,
+      "doc": "Prêmio da Apólice. Cardinalidade: [0..1]"
+    },
+    {
+      "name": "cosseguro",
+      "type": ["null", {
+        "type": "record",
+        "name": "Cosseguro",
+        "namespace": "io.github.wesleyosantos91.susep.sro.model.endosso",
+        "doc": "Record representando Cosseguro. Tag: cosseguro. Gerado automaticamente a partir da especificação SRO v2.0.0",
+        "fields": [
+          {
+            "name": "percentualRetido",
+            "type": "string",
+            "doc": "Percentual Retido em Cosseguro. Percentual retido em cosseguro para apólices de cosseguro cedido. Cardinalidade: [1..1]. Tamanho: 3.9"
+          }
+        ]
+      }],
+      "default": null,
+      "doc": "Informações de Cosseguro. Cardinalidade: [0..1]"
+    }
+  ]
+}

@@ -1,0 +1,274 @@
+{
+  "type": "record",
+  "name": "Sinistro",
+  "namespace": "io.github.wesleyosantos91.susep.sro.model.sinistro",
+  "doc": "Representa um Sinistro no sistema SRO. Registro de sinistros incluindo aviso, regulação, cobertura, justificativas e dados específicos por modalidade. Especificação: SUSEP SRO v2.0.0 - Aba SINISTRO. Bounded Context: Sinistro. Aggregate Root: Sim",
+  "fields": [
+    {
+      "name": "status",
+      "type": "int",
+      "doc": "Status do processo de sinistro. Cardinalidade: [1..1]. Tag: status. Tipo: Int. Formato: 1 - Aberto 2 - Encerrado com Indenização 3 - Encerrado sem Indenização 4 - Reaberto 5 - Cancelado (Por erro operacional) 6 - Avaliação Inicial. Tamanho: 2"
+    },
+    {
+      "name": "dataAlteracaoStatus",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      },
+      "doc": "Data da alteração do registro. Cardinalidade: [1..1]. Tag: data_alteracao_status. Tipo: Date. Formato: AAAA-MM-DD. Tamanho: 10"
+    },
+    {
+      "name": "dataOcorrencia",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      },
+      "doc": "Data de ocorrência do sinistro. Cardinalidade: [1..1]. Tag: data_ocorrencia. Tipo: Date. Formato: AAAA-MM-DD. Tamanho: 10"
+    },
+    {
+      "name": "dataAviso",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      },
+      "doc": "Data de aviso do sinistro. Cardinalidade: [1..1]. Tag: data_aviso. Tipo: Date. Formato: AAAA-MM-DD. Tamanho: 10"
+    },
+    {
+      "name": "dataRegistroSeguradora",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      },
+      "doc": "Data de aviso do sinistro à seguradora. Cardinalidade: [1..1]. Tag: data_registro_seguradora. Tipo: Date. Formato: AAAA-MM-DD. Tamanho: 10"
+    },
+    {
+      "name": "dataReclamacaoTerceiro",
+      "type": ["null", {
+        "type": "int",
+        "logicalType": "date"
+      }],
+      "default": null,
+      "doc": "Data de Reclamação do Terceiro. Cardinalidade: [0..1]. Tag: data_reclamacao_terceiro. Tipo: Date. Formato: AAAA-MM-DD. Tamanho: 10"
+    },
+    {
+      "name": "justificativanegativas",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "JustificativaNegativa",
+          "namespace": "io.github.wesleyosantos91.susep.sro.model.sinistro",
+          "doc": "Representa Justificativa da Negativa no contexto de Sinistro. Especificação: SUSEP SRO v2.0.0 - Aba SINISTRO. Grupo: Justificativa da Negativa",
+          "fields": [
+            {
+              "name": "justificativa",
+              "type": "int",
+              "doc": "Justificativa da negativa de sinistro. Cardinalidade: [1..1]. Tag: justificativa. Tipo: Int. Formato: 1 - Risco Excluído 2 - Risco Agravado 3 - Sem Documentação 4 - Documentação Incompleta 5 - Prescrição 6 - Fora Cobertura 99 - Outros. Tamanho: 2. Observação: Campo trazido do leiaute de movimento de sinistro"
+            },
+            {
+              "name": "descricaoJustificativa",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Descrição da justificativa da negativa de sinistro. Cardinalidade: [0..1]. Tag: descricao_justificativa. Tipo: String. Formato: -. Tamanho: 1024. Condição: Campo obrigatório apenas para Justificativa cujo domínio seja '99'- Outros. Observação: Campo trazido do leiaute de movimento de sinistro Alteração de cardinalidade"
+            }
+          ]
+        }
+      },
+      "default": [],
+      "doc": "Lista de Justificativa da Negativa. Tipo: Lista de JustificativaNegativa"
+    },
+    {
+      "name": "documentoafetados",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "DocumentoAfetado",
+          "namespace": "io.github.wesleyosantos91.susep.sro.model.sinistro",
+          "doc": "Representa Documentos Afetados no contexto de Sinistro. Especificação: SUSEP SRO v2.0.0 - Aba SINISTRO. Grupo: Documentos Afetados",
+          "fields": [
+            {
+              "name": "apoliceCodigo",
+              "type": "string",
+              "doc": "Referência ao Identificador da apólice ou bilhete. Cardinalidade: [1..1]. Tag: apolice_codigo. Tipo: String. Formato: -. Tamanho: 60. Observação: Alteração de Cardinalidade Campo movimentado do bloco 'dados gerais'"
+            },
+            {
+              "name": "certificadoCodigo",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Referência ao Identificador do certificado. Cardinalidade: [0..1]. Tag: certificado_codigo. Tipo: String. Formato: -. Tamanho: 60. Observação: Alteração de Cardinalidade Campo movimentado do bloco 'dados gerais'"
+            },
+            {
+              "name": "numeroEndosso",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Referência ao Identificador do endosso. Cardinalidade: [0..1]. Tag: numero_endosso. Tipo: String. Formato: -. Tamanho: 60. Observação: Alteração de Cardinalidade Campo movimentado do bloco 'dados gerais'"
+            }
+          ]
+        }
+      },
+      "default": [],
+      "doc": "Lista de Documentos Afetados. Tipo: Lista de DocumentoAfetado"
+    },
+    {
+      "name": "coberturaafetadas",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "CoberturaAfetada",
+          "namespace": "io.github.wesleyosantos91.susep.sro.model.sinistro",
+          "doc": "Representa Coberturas afetadas no contexto de Sinistro. Especificação: SUSEP SRO v2.0.0 - Aba SINISTRO. Grupo: Coberturas afetadas",
+          "fields": [
+            {
+              "name": "codigoObjeto",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Referência ao Identificador do objeto segurado. Cardinalidade: [0..1]. Tag: codigo_objeto. Tipo: String. Formato: -. Tamanho: 50"
+            },
+            {
+              "name": "grupoRamo",
+              "type": "string",
+              "doc": "Grupo e ramo. Cardinalidade: [1..1]. Tag: grupo_ramo. Tipo: String. Formato: -. Tamanho: 4. Observação: Incluir para previdência os dominios: 8800 - Coberturas de Sobrevivência (Previdência) 8900 - Coberturas de Risco (Previdência)"
+            },
+            {
+              "name": "sinistroCoberturaCodigo",
+              "type": ["null", "int"],
+              "default": null,
+              "doc": "Código da cobertura afetada. Cardinalidade: [0..1]. Tag: sinistro_cobertura_codigo. Tipo: Int. Formato: Tabela de Coberturas. Tamanho: 5. Observação: Alteração da cardinalidade"
+            },
+            {
+              "name": "coberturaInternaSeguradora",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Referência ao Código Interno da Cobertura da Seguradora da cobertura afetada. Cardinalidade: [0..1]. Tag: cobertura_interna_seguradora. Tipo: String. Formato: -. Tamanho: 50. Observação: Campo incluído."
+            },
+            {
+              "name": "sinistroCoberturaOutros",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Descrição / Nome da cobertura afetada (movimento). Cardinalidade: [0..1]. Tag: sinistro_cobertura_outros. Tipo: String. Formato: -. Tamanho: 500. Condição: Obrigatório apenas para o domínio do campo Código da Cobertura '999'- Outros"
+            },
+            {
+              "name": "dataAvisoCobertura",
+              "type": ["null", {
+                "type": "int",
+                "logicalType": "date"
+              }],
+              "default": null,
+              "doc": "Data de aviso do sinistro por cobertura. Cardinalidade: [0..1]. Tag: data_aviso_cobertura. Tipo: Date. Formato: AAAA-MM-DD. Tamanho: 10"
+            },
+            {
+              "name": "dataRegistroSeguradoraCobertura",
+              "type": ["null", {
+                "type": "int",
+                "logicalType": "date"
+              }],
+              "default": null,
+              "doc": "Data de aviso do sinistro à seguradora por cobertura. Cardinalidade: [0..1]. Tag: data_registro_seguradora_cobertura. Tipo: Date. Formato: AAAA-MM-DD. Tamanho: 10"
+            },
+            {
+              "name": "dataReclamacaoTerceiroCobertura",
+              "type": ["null", {
+                "type": "int",
+                "logicalType": "date"
+              }],
+              "default": null,
+              "doc": "Data de Reclamação do Terceiro por cobertura. Cardinalidade: [0..1]. Tag: data_reclamacao_terceiro_cobertura. Tipo: Date. Formato: AAAA-MM-DD. Tamanho: 10"
+            }
+          ]
+        }
+      },
+      "default": [],
+      "doc": "Lista de Coberturas afetadas. Tipo: Lista de CoberturaAfetada"
+    },
+    {
+      "name": "vistoriarurals",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "VistoriaRural",
+          "namespace": "io.github.wesleyosantos91.susep.sro.model.sinistro",
+          "doc": "Representa Dados Vistoria Rural no contexto de Sinistro. Especificação: SUSEP SRO v2.0.0 - Aba SINISTRO. Grupo: Dados Vistoria Rural",
+          "fields": [
+            {
+              "name": "ufVistoria",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "UF da vistoria (para Agrícola, Pecuário, Aquícola e Florestas). Cardinalidade: [0..1]. Tag: uf_vistoria. Tipo: String. Formato: AC, AL, AP, AM, BA, CE, DF, ES, GO, MA, MT, MS, MG, PA, PB, PR, PE, PI, RJ, RN, RS, RO, RR, SC, SP, SE, TO. Tamanho: 2. Observação: Anexo VIII - Rural"
+            },
+            {
+              "name": "codigoPostalVistoria",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Código postal da vistoria, caso haja (para Agrícola, Pecuário, Aquícola e Florestas). Cardinalidade: [0..1]. Tag: codigo_postal_vistoria. Tipo: String. Tamanho: 30. Observação: Anexo VIII - Rural"
+            },
+            {
+              "name": "paisVistoria",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "País da vistoria (para Agrícola, Pecuário, Aquícola e Florestas). Cardinalidade: [0..1]. Tag: pais_vistoria. Tipo: String. Formato: Lista de Países: ISO 3166-1 alfa-3. Tamanho: 3. Observação: Anexo VIII - Rural"
+            }
+          ]
+        }
+      },
+      "default": [],
+      "doc": "Lista de Dados Vistoria Rural. Tipo: Lista de VistoriaRural"
+    },
+    {
+      "name": "automovels",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "Automovel",
+          "namespace": "io.github.wesleyosantos91.susep.sro.model.sinistro",
+          "doc": "Representa Dados Automóvel no contexto de Sinistro. Especificação: SUSEP SRO v2.0.0 - Aba SINISTRO. Grupo: Dados Automóvel",
+          "fields": [
+            {
+              "name": "codigoObjeto",
+              "type": "string",
+              "doc": "Referência ao Identificador do objeto segurado. Cardinalidade: [1..1]. Tag: codigo_objeto. Tipo: String. Formato: -. Tamanho: 50. Observação: Campo incluído."
+            },
+            {
+              "name": "causaSinistro",
+              "type": ["null", "int"],
+              "default": null,
+              "doc": "Causa do Sinistro. Cardinalidade: [0..1]. Tag: causa_sinistro. Tipo: Int. Formato: 1 - Roubo/Furto (este código somente deve ser utilizadoquando a companhia não dispõe das informações deRoubo e Furto separadamente) 2 - Roubo 3 - Furto 4 - Colisão parcial 5 - Colisão Indenização Integral 6 - Incêndio 7 - Assistência 24 horas 99 - Outros. Tamanho: 2"
+            },
+            {
+              "name": "sexoCondutor",
+              "type": ["null", "int"],
+              "default": null,
+              "doc": "Sexo do condutor do veículo no momento do sinistro. Cardinalidade: [0..1]. Tag: sexo_condutor. Tipo: Int. Formato: 1 - Masculino 2 - Feminino 3 - Não declarado 99 - Outros. Tamanho: 2"
+            },
+            {
+              "name": "dataNascimento",
+              "type": ["null", {
+                "type": "int",
+                "logicalType": "date"
+              }],
+              "default": null,
+              "doc": "Data de nascimento do condutor do veículo no momento do sinistro (Casco, RCF-A, APP e Assistência e Outras Coberturas). Cardinalidade: [0..1]. Tag: data_nascimento. Tipo: Date. Formato: AAAA-MM-DD. Tamanho: 10"
+            },
+            {
+              "name": "paisOcorrenciaSinistro",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "País de ocorrência do sinistro (Carta Verde). Cardinalidade: [0..1]. Tag: pais_ocorrencia_sinistro. Tipo: String. Formato: Lista de Países: ISO 3166-1 alfa-3. Tamanho: 3"
+            },
+            {
+              "name": "cepLocalidadeSinistro",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "CEP da localidade de ocorrência do sinistro. Cardinalidade: [0..1]. Tag: cep_localidade_sinistro. Tipo: String. Formato: -. Tamanho: 30"
+            }
+          ]
+        }
+      },
+      "default": [],
+      "doc": "Lista de Dados Automóvel. Tipo: Lista de Automovel"
+    }
+  ]
+}

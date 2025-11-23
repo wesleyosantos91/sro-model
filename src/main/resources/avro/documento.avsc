@@ -1,0 +1,547 @@
+{
+  "type": "record",
+  "name": "Documento",
+  "namespace": "io.github.wesleyosantos91.susep.sro.model.documento",
+  "doc": "Record principal representando um Documento (Apólice) do SRO. Sistema de Registro de Operações (SRO) - Versão 2.0.0. Este record contém todos os campos e blocos de informação de um documento de seguro. Gerado automaticamente a partir da especificação SUSEP.",
+  "fields": [
+    {
+      "name": "uuid",
+      "type": "string",
+      "doc": "Uuid. Identificador único do registro. Cardinalidade: [1..1]. Formato: 7d9b5524-d047-40ee-8f9c-62c0c8e87d8e. Tamanho: 36"
+    },
+    {
+      "name": "anotacao",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Anotação Registro. Campo livre de anotação. Cardinalidade: [0..1]. Tamanho: 500. Observação: Este campo servirá para que as Registradoras utilizem para seu controle interno dos registros e deverá ser retornado no check layout"
+    },
+    {
+      "name": "codigoSeguradora",
+      "type": "string",
+      "doc": "Código Susep da seguradora. Código Susep da seguradora. Cardinalidade: [1..1]. Tamanho: 5"
+    },
+    {
+      "name": "dataRegistro",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      },
+      "doc": "Data do Registro. Data do registro. Cardinalidade: [1..1]. Formato: ISO 8601 2021-06-25T18:00:00Z"
+    },
+    {
+      "name": "dataAlteracao",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      },
+      "doc": "Data da Alteração do Registro. Data da alteração do registro. Cardinalidade: [1..1]. Formato: ISO 8601 2021-06-25T18:00:00Z. Condição: Campo obrigatório quando o registro for alterado."
+    },
+    {
+      "name": "indicadorExclusao",
+      "type": "int",
+      "doc": "Indicador Exclusão. Indica se é um registro de exclusão. Cardinalidade: [1..1]. Formato: 1 - Sim, 2 - Não. Tamanho: 1"
+    },
+    {
+      "name": "tipoDocumentoEmitido",
+      "type": "int",
+      "doc": "Tipo de Documento Emitido. Tipo de Documento Emitido. Cardinalidade: [1..1]. Formato: 1 - Apólice Individual, 2 - Apólice Coletiva, 3 - Bilhete, 4 - Certificado, 5 - Apólice Individual Automóvel, 6 - Apólice Frota Automóvel, 7 - Certificado Automóvel, 8 - Contrato Coletivo (PREV), 9 - Certificado de Participante Individual (PREV), 10 - Certificado de Participante Coletivo (PREV), 11 - Apólice Coletiva sem Certificado. Tamanho: 2. Condição: Para os domínios 4 e 7, validar o registro prévio da apólice coletiva por meio de um identificador da apólice já registrado. Observação: Apólice do tipo 11 será utilizada para as operações de seguros de pessoas coletivas cujos segurados não sejam identificados no momento da emissão, mas identificáveis pelas condições contratadas pelo Estipulante"
+    },
+    {
+      "name": "apoliceCodigo",
+      "type": "string",
+      "doc": "Identificador do Apólice, Bilhete, Contrato Coletivo ou Certificado de participante Individual. Apólice, Bilhete, Contrato Coletivo ou Certificado de Participante Individual. Cardinalidade: [1..1]. Tamanho: 60. Observação: Identificador utilizado para as entidades de 1º nível, a saber, apólices individuais, bilhetes e certificados de participante individual de previdência; por sua vez, nas operações coletivas equivale às apólices coletivas e aos contratos coletivos de previdência"
+    },
+    {
+      "name": "numeroSusepApolice",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Número Susep da Apólice. Número SUSEP da apólice, conforme Circular Susep 326. Cardinalidade: [0..1]. Tamanho: 30. Condição: Campo obrigatório para apólices com coberturas do ramo Garantia (0775 e 0776). Observação: Regra de formação: SSSSSAAAAFFFFRRRRNNNNNNN. SSSSS Código da sociedade seguradora na SUSEP - 5 dígitos. AAAA Ano de emissão da apólice - 4 dígitos. FFFF Identificador da sucursal da emissão da apólice - 4 dígitos. RRRR Código do ramo da operação - 4 dígitos. NNNNNNN Número sequencial por ramo de operação - 7 dígitos"
+    },
+    {
+      "name": "certificadoCodigo",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Identificador do Certificado. Identificador do certificado de seguro ou do certificado de participante coletivo de previdência. Cardinalidade: [0..1]. Tamanho: 60. Condição: Campo obrigatório somente para o Tipo de Documento = 4, 7 e 10. Observação: Identificador utilizado para as entidades de 2º nível exclusivas das operações coletivas, a saber, certificados de seguro e certificados de participante coletivos de previdência"
+    },
+    {
+      "name": "tipoEmissao",
+      "type": "int",
+      "doc": "Tipo de Emissão. Tipo de emissão da apólice. Cardinalidade: [1..1]. Formato: 1 - Emissão Própria, 2 - Cosseguro Aceito. Tamanho: 2"
+    },
+    {
+      "name": "dataEmissao",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      },
+      "doc": "Data de Emissão. Data de emissão do documento. Cardinalidade: [1..1]. Formato: AAAA-MM-DD. Tamanho: 10"
+    },
+    {
+      "name": "dataInicio",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      },
+      "doc": "Data de Início de Vigência. Data de início de vigência do documento. Cardinalidade: [1..1]. Formato: AAAA-MM-DD. Tamanho: 10"
+    },
+    {
+      "name": "dataTermino",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      },
+      "doc": "Data de Fim de Vigência. Data de fim de vigência do documento. Cardinalidade: [1..1]. Formato: AAAA-MM-DD. Tamanho: 10"
+    },
+    {
+      "name": "codigoFilial",
+      "type": "string",
+      "doc": "Código da Filial. Código da filial de emissão da apólice. Cardinalidade: [1..1]. Tamanho: 4"
+    },
+    {
+      "name": "codigoSeguradoraLider",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Código da Seguradora Líder. Código da seguradora líder para apólices com arranjo de cosseguro. Cardinalidade: [0..1]. Tamanho: 5. Condição: Obrigatório quando o campo Tipo Emissão for Cosseguro Aceito"
+    },
+    {
+      "name": "apoliceCodigoLider",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Identificador da Apólice Seguradora Líder. Identificador da apólice seguradora líder para apólice de cosseguro aceito. Cardinalidade: [0..1]. Tamanho: 60. Condição: Obrigatório quando o campo Tipo Emissão for Cosseguro Aceito"
+    },
+    {
+      "name": "moedaApolice",
+      "type": "string",
+      "doc": "Moeda da Apólice. Moeda de emissão da apólice. Cardinalidade: [1..1]. Formato: ISO 4217 Exemplo (BRL, USD, EUR, GBP, JPY). Tamanho: 3"
+    },
+    {
+      "name": "limiteMaximoGarantia",
+      "type": "string",
+      "doc": "Limite Máximo de Garantia (LMG). Limite máximo de garantia (LMG). Cardinalidade: [1..1]. Tamanho: 16.2. Condição: Campo não aceita valor negativo. Observação: Quando não for definível o LMG preencher com 0,00. Representado como string para manter precisão decimal"
+    },
+    {
+      "name": "limiteMaximoGarantiaReal",
+      "type": "string",
+      "doc": "Limite Máximo de Garantia (LMG) em Reais. Limite máximo de garantia (LMG) em reais. Cardinalidade: [1..1]. Tamanho: 16.2. Condição: Campo obrigatório se moeda diferente de Real. Campo não aceita valor negativo. Observação: Quando não for definível o LMG preencher com 0,00. Representado como string para manter precisão decimal"
+    },
+    {
+      "name": "coberturaBasica",
+      "type": ["null", "int"],
+      "default": null,
+      "doc": "Indicador de Cobertura Básica. Cardinalidade: [0..1]. Formato: 1 - Simples, 2 - Ampla. Tamanho: 1. Condição: Campo obrigatório para apólices com coberturas do ramo Compreensivo Condomínio (0116)"
+    },
+    {
+      "name": "ccgs",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "Ccg",
+          "namespace": "io.github.wesleyosantos91.susep.sro.model.documento",
+          "doc": "Record representando Ccg. Tag: ccg. Gerado automaticamente a partir da especificação SRO v2.0.0",
+          "fields": [
+            {
+              "name": "ccgIdentificacao",
+              "type": "string",
+              "doc": "Identificador do CCG. Identificador do contrato de contragarantia. Cardinalidade: [1..1]. Tamanho: 100. Observação: Este campo faz referência ao identificador do CCG registrado pelo leiaute 4 - CCG"
+            },
+            {
+              "name": "dataVinculacao",
+              "type": [
+                "null",
+                {
+                  "type": "int",
+                  "logicalType": "date"
+                }
+              ],
+              "default": null,
+              "doc": "Data de Vinculação do CCG. Data de vinculação do contrato de contragarantia. Cardinalidade: [0..1]. Formato: AAAA-MM-DD. Tamanho: 10. Observação: Campo aplicável quando o CCG for vinculado em data posterior ao Registro da Apólice/Endosso"
+            }
+          ]
+        }
+      },
+      "default": [],
+      "doc": "Lista de CCG (Contratos de Contragarantia). Cardinalidade: [0..N]"
+    },
+    {
+      "name": "segurados",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "Segurado",
+          "namespace": "io.github.wesleyosantos91.susep.sro.model.documento",
+          "doc": "Record representando Segurado. Tag: segurado. Gerado automaticamente a partir da especificação SRO v2.0.0",
+          "fields": [
+            {
+              "name": "documento",
+              "type": "string",
+              "doc": "Documento de Identificação da Pessoa Associada. Documento de identificação da pessoa associada à apólice. Cardinalidade: [1..1]. Tamanho: 40"
+            },
+            {
+              "name": "tipoDocumento",
+              "type": "int",
+              "doc": "Tipo de Documento da Pessoa Associada. Tipo de documento da pessoa associada à apólice. Cardinalidade: [1..1]. Formato: 1 - CPF, 2 - CNPJ, 3 - PASSAPORTE, 99 - Outros. Tamanho: 2. Observação: Inclusão do domínio 3 - Passaporte para equivalência com o dispositivo na Circular Susep 642. A utilização do domínio 99 - Outros para legado anterior à vigência da Circular Susep 642, em 1° de outubro de 2021"
+            },
+            {
+              "name": "nome",
+              "type": "string",
+              "doc": "Nome ou Razão Social da Pessoa Associada. Nome ou razão social da pessoa associada à apólice. Cardinalidade: [1..1]. Tamanho: 144"
+            },
+            {
+              "name": "dataNascimento",
+              "type": [
+                "null",
+                {
+                  "type": "int",
+                  "logicalType": "date"
+                }
+              ],
+              "default": null,
+              "doc": "Data Nascimento. Data de Nascimento do segurado. Cardinalidade: [0..1]. Formato: AAAA-MM-DD. Tamanho: 10. Condição: 1) obrigatório quando cobertura do ramo habitacional; 2) obrigatório quando o tipo de documento pertencer aos domínios 8, 9 e 10"
+            },
+            {
+              "name": "sexoSeguradoParticipante",
+              "type": ["null", "int"],
+              "default": null,
+              "doc": "Sexo da Pessoa Associada. Sexo do segurado ou participante. Cardinalidade: [0..1]. Formato: 1 - Feminino, 2 - Masculino, 3 - Não informado. Tamanho: 2. Condição: 1) obrigatório quando o tipo de documento pertencer aos domínios 8, 9 e 10"
+            },
+            {
+              "name": "codigoPostal",
+              "type": "string",
+              "doc": "Código Postal da Pessoa Associada. Código postal da pessoa associada à apólice. Cardinalidade: [1..1]. Tamanho: 30"
+            },
+            {
+              "name": "cidade",
+              "type": "string",
+              "doc": "Cidade da Pessoa Associada. Cidade da pessoa associada à apólice. Cardinalidade: [1..1]. Tamanho: 100. Observação: Por extenso"
+            },
+            {
+              "name": "estado",
+              "type": "string",
+              "doc": "Estado da Pessoa Associada. Estado da pessoa associada à apólice. Cardinalidade: [1..1]. Tamanho: 50. Observação: Por extenso"
+            },
+            {
+              "name": "pais",
+              "type": "string",
+              "doc": "País da Pessoa Associada. País da pessoa associada à apólice. Cardinalidade: [1..1]. Formato: Lista de Países: ISO 3166-1 alfa-3. Tamanho: 3. Observação: Código de 3 letras conforme ISO 3166-1 alfa-3"
+            }
+          ]
+        }
+      },
+      "default": [],
+      "doc": "Lista de Segurados. Cardinalidade: [0..N]"
+    },
+    {
+      "name": "beneficiarios",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "Beneficiario",
+          "namespace": "io.github.wesleyosantos91.susep.sro.model.documento",
+          "doc": "Record representando Beneficiario. Tag: beneficiario. Gerado automaticamente a partir da especificação SRO v2.0.0",
+          "fields": [
+            {
+              "name": "documento",
+              "type": "string",
+              "doc": "Documento de Identificação da Pessoa Associada. Documento de identificação da pessoa associada à apólice. Cardinalidade: [1..1]. Tamanho: 40"
+            },
+            {
+              "name": "tipoDocumento",
+              "type": "int",
+              "doc": "Tipo de Documento da Pessoa Associada. Tipo de documento da pessoa associada à apólice. Cardinalidade: [1..1]. Formato: 1 - CPF, 2 - CNPJ, 3 - PASSAPORTE, 99 - Outros. Tamanho: 2"
+            },
+            {
+              "name": "nome",
+              "type": "string",
+              "doc": "Nome ou Razão Social da Pessoa Associada. Nome ou razão social da pessoa associada à apólice. Cardinalidade: [1..1]. Tamanho: 144"
+            },
+            {
+              "name": "codigoPostal",
+              "type": "string",
+              "doc": "Código Postal da Pessoa Associada. Código postal da pessoa associada à apólice. Cardinalidade: [1..1]. Tamanho: 30"
+            },
+            {
+              "name": "cidade",
+              "type": "string",
+              "doc": "Cidade da Pessoa Associada. Cidade da pessoa associada à apólice. Cardinalidade: [1..1]. Tamanho: 100. Observação: Por extenso"
+            },
+            {
+              "name": "estado",
+              "type": "string",
+              "doc": "Estado da Pessoa Associada. Estado da pessoa associada à apólice. Cardinalidade: [1..1]. Tamanho: 50. Observação: Por extenso"
+            },
+            {
+              "name": "pais",
+              "type": "string",
+              "doc": "País da Pessoa Associada. País da pessoa associada à apólice. Cardinalidade: [1..1]. Formato: Lista de Países: ISO 3166-1 alfa-3. Tamanho: 3. Observação: Código de 3 letras conforme ISO 3166-1 alfa-3"
+            }
+          ]
+        }
+      },
+      "default": [],
+      "doc": "Lista de Beneficiários. Cardinalidade: [0..N]"
+    },
+    {
+      "name": "tomadores",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "Tomador",
+          "namespace": "io.github.wesleyosantos91.susep.sro.model.documento",
+          "doc": "Record representando Tomador. Tag: tomador. Gerado automaticamente a partir da especificação SRO v2.0.0",
+          "fields": [
+            {
+              "name": "documento",
+              "type": "string",
+              "doc": "Documento de Identificação da Pessoa Associada. Documento de identificação da pessoa associada à apólice. Cardinalidade: [1..1]. Tamanho: 40"
+            },
+            {
+              "name": "tipoDocumento",
+              "type": "int",
+              "doc": "Tipo de Documento da Pessoa Associada. Tipo de documento da pessoa associada à apólice. Cardinalidade: [1..1]. Formato: 1 - CPF, 2 - CNPJ, 3 - PASSAPORTE, 99 - Outros. Tamanho: 2"
+            },
+            {
+              "name": "nome",
+              "type": "string",
+              "doc": "Nome ou Razão Social da Pessoa Associada. Nome ou razão social da pessoa associada à apólice. Cardinalidade: [1..1]. Tamanho: 144"
+            },
+            {
+              "name": "codigoPostal",
+              "type": "string",
+              "doc": "Código Postal da Pessoa Associada. Código postal da pessoa associada à apólice. Cardinalidade: [1..1]. Tamanho: 30"
+            },
+            {
+              "name": "cidade",
+              "type": "string",
+              "doc": "Cidade da Pessoa Associada. Cidade da pessoa associada à apólice. Cardinalidade: [1..1]. Tamanho: 100. Observação: Por extenso"
+            },
+            {
+              "name": "estado",
+              "type": "string",
+              "doc": "Estado da Pessoa Associada. Estado da pessoa associada à apólice. Cardinalidade: [1..1]. Tamanho: 50. Observação: Por extenso"
+            },
+            {
+              "name": "pais",
+              "type": "string",
+              "doc": "País da Pessoa Associada. País da pessoa associada à apólice. Cardinalidade: [1..1]. Formato: Lista de Países: ISO 3166-1 alfa-3. Tamanho: 3. Observação: Código de 3 letras conforme ISO 3166-1 alfa-3"
+            }
+          ]
+        }
+      },
+      "default": [],
+      "doc": "Lista de Tomadores/Garantidos. Cardinalidade: [0..N]"
+    },
+    {
+      "name": "intermediarios",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "Intermediario",
+          "namespace": "io.github.wesleyosantos91.susep.sro.model.documento",
+          "doc": "Record representando Intermediario. Tag: intermediario. Gerado automaticamente a partir da especificação SRO v2.0.0",
+          "fields": [
+            {
+              "name": "tipo",
+              "type": "int",
+              "doc": "Tipo do Intermediador. Tipo do intermediador da apólice. Cardinalidade: [1..1]. Formato: 1 - Corretor, 2 - Representante, 3 - Estipulante, 4 - Correspondente, 5 - Agente de Microsseguros, 6 - Averbador, 7 - Instituidor, 99 - Outro. Tamanho: 2"
+            },
+            {
+              "name": "documento",
+              "type": "string",
+              "doc": "Documento do Intermediador. Documento do intermediador da apólice. Cardinalidade: [1..1]. Tamanho: 40"
+            },
+            {
+              "name": "codigo",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Identificador do Intermediador. Identificador do intermediador da apólice - código Susep do corretor(a). Cardinalidade: [0..1]. Tamanho: 40. Condição: Campo obrigatório quando o campo Tipo for preenchido com 1 - Corretor"
+            },
+            {
+              "name": "tipoDocumento",
+              "type": "int",
+              "doc": "Tipo de Documento do Intermediador. Tipo de documento do intermediador da apólice. Cardinalidade: [1..1]. Formato: 1 - CPF, 2 - CNPJ, 3 - PASSAPORTE, 99 - Outros. Tamanho: 2"
+            },
+            {
+              "name": "nome",
+              "type": "string",
+              "doc": "Nome ou Razão Social do Intermediador. Nome ou razão social do intermediador da apólice. Cardinalidade: [1..1]. Tamanho: 144"
+            },
+            {
+              "name": "codigoPostal",
+              "type": "string",
+              "doc": "Código Postal do Intermediador. Código postal do intermediador da apólice. Cardinalidade: [1..1]. Tamanho: 30"
+            },
+            {
+              "name": "cidade",
+              "type": "string",
+              "doc": "Cidade da Pessoa Associada. Cidade do intermediador da apólice. Cardinalidade: [1..1]. Tamanho: 100. Observação: Por extenso"
+            },
+            {
+              "name": "estado",
+              "type": "string",
+              "doc": "Estado da Pessoa Associada. Estado do intermediador da apólice. Cardinalidade: [1..1]. Tamanho: 50. Observação: Por extenso"
+            },
+            {
+              "name": "pais",
+              "type": "string",
+              "doc": "País da Pessoa Associada. País do intermediador da apólice. Cardinalidade: [1..1]. Formato: Lista de Países: ISO 3166-1 alfa-3. Tamanho: 3. Observação: Código de 3 letras conforme ISO 3166-1 alfa-3"
+            },
+            {
+              "name": "valorComissao",
+              "type": "string",
+              "doc": "Valor de Comissão do Intermediador. Valor total de comissão do intermediador. Cardinalidade: [1..1]. Tamanho: 16.2. Representado como string para manter precisão decimal"
+            },
+            {
+              "name": "valorComissaoReal",
+              "type": "string",
+              "doc": "Valor de Comissão do Intermediador em Reais. Valor total de comissão do intermediador em reais. Cardinalidade: [1..1]. Tamanho: 16.2. Representado como string para manter precisão decimal"
+            }
+          ]
+        }
+      },
+      "default": [],
+      "doc": "Lista de Intermediários. Cardinalidade: [0..N]"
+    },
+    {
+      "name": "objetosSegurados",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "ObjetoSegurado",
+          "namespace": "io.github.wesleyosantos91.susep.sro.model.documento",
+          "doc": "Record representando ObjetoSegurado. Tag: objeto_segurado. Gerado automaticamente a partir da especificação SRO v2.0.0",
+          "fields": [
+            {
+              "name": "codigo",
+              "type": "string",
+              "doc": "Identificador do Objeto Segurado. Identificador do objeto segurado. Cardinalidade: [1..1]. Tamanho: 50. Observação: Para Fiança Locatícia, é a identificação do Contrato de Locação"
+            },
+            {
+              "name": "tipo",
+              "type": "int",
+              "doc": "Tipo do Objeto Segurado. Tipo do objeto segurado. Cardinalidade: [1..1]. Formato: 1 - Contrato, 2 - Processo administrativo, 3 - Processo judicial, 4 - Automóvel, 5 - Condutor, 6 - Frota, 7 - Pessoa, 99 - Outros. Tamanho: 2"
+            },
+            {
+              "name": "descricaoTipo",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Descrição do Tipo do Objeto Segurado. Descrição do tipo do objeto segurado. Cardinalidade: [0..1]. Tamanho: 500. Condição: Obrigatório quando o campo Tipo for preenchido com Outros"
+            },
+            {
+              "name": "descricaoObjeto",
+              "type": "string",
+              "doc": "Descrição do Objeto Segurado. Descrição do objeto segurado. Cardinalidade: [1..1]. Tamanho: 1024. Observação: Quando Tipo de Objeto Segurado for a opção 7- Pessoas, preencher com o texto Própria pessoa segurada"
+            },
+            {
+              "name": "valor",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Valor do Objeto Segurado. Valor do objeto segurado. Cardinalidade: [0..1]. Tamanho: 16.2. Condição: Obrigatório quando o campo Tipo for preenchido com Contrato, Processo Administrativo e Processo Judicial e para coberturas dos ramos de seguro garantia e de fiança locatícia. Representado como string para manter precisão decimal"
+            },
+            {
+              "name": "valorReal",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Valor do Objeto Segurado em Reais. Valor do objeto segurado em reais. Cardinalidade: [0..1]. Tamanho: 16.2. Condição: Obrigatório quando o campo Tipo for preenchido com Contrato, Processo Administrativo e Processo Judicial e para coberturas dos ramos de seguro garantia e de fiança locatícia. Representado como string para manter precisão decimal"
+            },
+            {
+              "name": "dataInicio",
+              "type": [
+                "null",
+                {
+                  "type": "int",
+                  "logicalType": "date"
+                }
+              ],
+              "default": null,
+              "doc": "Data de Início do Objeto Segurado. Data de início do objeto segurado. Cardinalidade: [0..1]. Formato: AAAA-MM-DD. Tamanho: 10. Condição: Obrigatório quando o campo Tipo for preenchido com Contrato, Processo Administrativo e Processo Judicial e para coberturas dos ramos de seguro garantia e de fiança locatícia"
+            },
+            {
+              "name": "dataTermino",
+              "type": [
+                "null",
+                {
+                  "type": "int",
+                  "logicalType": "date"
+                }
+              ],
+              "default": null,
+              "doc": "Data de Fim do Objeto Segurado. Data de fim do objeto segurado. Cardinalidade: [0..1]. Formato: AAAA-MM-DD. Tamanho: 10. Observação: Aplicável quando o término do objeto for determinado e conhecido na emissão"
+            }
+          ]
+        }
+      },
+      "default": [],
+      "doc": "Lista de Objetos Segurados. Cardinalidade: [0..N]"
+    },
+    {
+      "name": "premioApolice",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "PremioApolice",
+          "namespace": "io.github.wesleyosantos91.susep.sro.model.documento",
+          "doc": "Record representando PremioApolice. Tag: premio_apolice. Gerado automaticamente a partir da especificação SRO v2.0.0",
+          "fields": [
+            {
+              "name": "valorTotal",
+              "type": "string",
+              "doc": "Valor Total do Prêmio. Valor total do prêmio da apólice. Cardinalidade: [1..1]. Tamanho: 16.2. Representado como string para manter precisão decimal"
+            },
+            {
+              "name": "valorTotalReal",
+              "type": "string",
+              "doc": "Valor Total do Prêmio em Reais. Valor total do prêmio da apólice em reais. Cardinalidade: [1..1]. Tamanho: 16.2. Representado como string para manter precisão decimal"
+            },
+            {
+              "name": "adicionalFracionamento",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Valor Total do Adicional de Fracionamento. Valor total do adicional de fracionamento da apólice. Cardinalidade: [0..1]. Tamanho: 16.2. Representado como string para manter precisão decimal"
+            },
+            {
+              "name": "iof",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Valor total do IOF. Valor total do IOF da apólice. Cardinalidade: [0..1]. Tamanho: 16.2. Representado como string para manter precisão decimal"
+            },
+            {
+              "name": "numeroParcelas",
+              "type": "int",
+              "doc": "Quantidade de Parcelas de Prêmio. Quantidade de parcelas de prêmio da apólice. Cardinalidade: [1..1]. Tamanho: 3"
+            }
+          ]
+        }
+      ],
+      "default": null,
+      "doc": "Prêmio da Apólice. Cardinalidade: [0..1]"
+    },
+    {
+      "name": "cosseguro",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "Cosseguro",
+          "namespace": "io.github.wesleyosantos91.susep.sro.model.documento",
+          "doc": "Record representando Cosseguro. Tag: cosseguro. Gerado automaticamente a partir da especificação SRO v2.0.0",
+          "fields": [
+            {
+              "name": "percentualRetido",
+              "type": "float",
+              "doc": "Percentual Retido em Cosseguro. Percentual retido em cosseguro para apólices de cosseguro cedido. Cardinalidade: [1..1]. Tamanho: 3.9"
+            }
+          ]
+        }
+      ],
+      "default": null,
+      "doc": "Informações de Cosseguro. Cardinalidade: [0..1]"
+    }
+  ]
+}

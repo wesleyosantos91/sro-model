@@ -1,0 +1,187 @@
+{
+  "type": "record",
+  "name": "MovimentoPremio",
+  "namespace": "io.github.wesleyosantos91.susep.sro.model.movimentopremio",
+  "doc": "Movimento de Prêmio do SRO - Sistema de Registro de Operações (SRO) - Versão 2.0.0. Representa movimentações financeiras relacionadas a prêmios de seguros. Inclui emissões, cancelamentos, pagamentos, restituições e outras operações financeiras.",
+  "fields": [
+    {
+      "name": "uuid",
+      "type": "string",
+      "doc": "Identificador único do registro. Formato: 7d9b5524-d047-40ee-8f9c-62c0c8e87d8e. Tamanho: 36. Cardinalidade: [1..1]"
+    },
+    {
+      "name": "anotacao",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Campo livre de anotação. Tamanho máximo: 500. Cardinalidade: [0..1]. Este campo servirá para que as Registradoras utilizem para seu controle interno dos registros"
+    },
+    {
+      "name": "codigoSeguradora",
+      "type": "string",
+      "doc": "Código SUSEP da seguradora. Tamanho: 5. Cardinalidade: [1..1]"
+    },
+    {
+      "name": "dataRegistro",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      },
+      "doc": "Data do registro. Formato: ISO 8601. Cardinalidade: [1..1]"
+    },
+    {
+      "name": "dataAlteracao",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      },
+      "doc": "Data da alteração do registro. Formato: ISO 8601. Cardinalidade: [1..1]"
+    },
+    {
+      "name": "indicadorExclusao",
+      "type": "int",
+      "doc": "Indica se é um registro de exclusão. Valores: 1 - Sim, 2 - Não. Tamanho: 1. Cardinalidade: [1..1]"
+    },
+    {
+      "name": "apoliceCodigo",
+      "type": "string",
+      "doc": "Identificador da Apólice / Bilhete. Tamanho máximo: 60. Cardinalidade: [1..1]"
+    },
+    {
+      "name": "certificadoCodigo",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Identificador do Certificado. Tamanho máximo: 60. Cardinalidade: [0..1]"
+    },
+    {
+      "name": "endossoCodigo",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Identificador do Endosso do documento. Tamanho máximo: 60. Cardinalidade: [0..1]"
+    },
+    {
+      "name": "identificadorMovimento",
+      "type": "string",
+      "doc": "Identificador do Movimento. Tamanho máximo: 80. Cardinalidade: [1..1]. Identificador único do movimento financeiro"
+    },
+    {
+      "name": "moeda",
+      "type": "string",
+      "doc": "Moeda. Formato: ISO 4217 (ex: BRL, USD, EUR, GBP, JPY). Tamanho: 3. Cardinalidade: [1..1]"
+    },
+    {
+      "name": "valorMovimento",
+      "type": "double",
+      "doc": "Valor do Movimento. Formato: 16.2 decimais. Cardinalidade: [1..1]"
+    },
+    {
+      "name": "valorMovimentoReal",
+      "type": "double",
+      "doc": "Valor do Movimento em Reais. Formato: 16.2 decimais. Cardinalidade: [1..1]"
+    },
+    {
+      "name": "dataMovimento",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      },
+      "doc": "Data do movimento. Formato: AAAA-MM-DD. Cardinalidade: [1..1]"
+    },
+    {
+      "name": "numeroParcelaMovimento",
+      "type": ["null", "int"],
+      "default": null,
+      "doc": "Número da Parcela do Movimento. Tamanho: 4 dígitos. Cardinalidade: [0..1]"
+    },
+    {
+      "name": "dataVencimento",
+      "type": ["null", {
+        "type": "int",
+        "logicalType": "date"
+      }],
+      "default": null,
+      "doc": "Data de Vencimento da Parcela. Formato: AAAA-MM-DD. Cardinalidade: [0..1]"
+    },
+    {
+      "name": "tipoMovimento",
+      "type": "int",
+      "doc": "Tipo do Movimento. Valores: 1 - Liquidação de Prêmio, 2 - Liquidação de Restituição de Prêmio, 3 - Liquidação de Custo de Aquisição, etc. Tamanho: 2. Cardinalidade: [1..1]. Obs: Os tipos 8, 10 e 13 têm reflexo contábil, demais são puramente financeiros"
+    },
+    {
+      "name": "premioCobertura",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Grupo / Bloco: Prêmio por ramo ou cobertura. Cardinalidade: [0..N]. Condição: Obrigatório quando tipo_movimento for 8, 10 ou 13"
+    },
+    {
+      "name": "grupoRamo",
+      "type": "string",
+      "doc": "Grupo e Ramo da Cobertura. Tamanho: 4. Cardinalidade: [1..1]"
+    },
+    {
+      "name": "codigo",
+      "type": "string",
+      "doc": "Identificador do Objeto Segurado. Referência ao Identificador do Objeto Segurado da cobertura aplicável. Tamanho máximo: 50. Cardinalidade: [1..1]"
+    },
+    {
+      "name": "coberturaInternaSeguradora",
+      "type": "string",
+      "doc": "Código Interno da Cobertura da Seguradora. Tamanho máximo: 50. Cardinalidade: [1..1]"
+    },
+    {
+      "name": "dataInicio",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      },
+      "doc": "Data de Início de Vigência de Prêmio da Cobertura. Formato: AAAA-MM-DD. Cardinalidade: [1..1]"
+    },
+    {
+      "name": "dataTermino",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      },
+      "doc": "Data de Fim de Vigência de Prêmio da Cobertura. Formato: AAAA-MM-DD. Cardinalidade: [1..1]"
+    },
+    {
+      "name": "limiteMaximoIndenizacao",
+      "type": ["null", "double"],
+      "default": null,
+      "doc": "Limite Máximo de Indenização (LMI). Formato: 16.2 decimais. Cardinalidade: [0..1]"
+    },
+    {
+      "name": "limiteMaximoIndenizacaoReal",
+      "type": ["null", "double"],
+      "default": null,
+      "doc": "Limite Máximo de Indenização (LMI) em Reais. Formato: 16.2 decimais. Cardinalidade: [0..1]"
+    },
+    {
+      "name": "valorPremio",
+      "type": "double",
+      "doc": "Valor de Prêmio do Ramo ou da Cobertura na Parcela Associada. Formato: 16.2 decimais. Cardinalidade: [1..1]. Corresponde ao prêmio comercial"
+    },
+    {
+      "name": "valorPremioReal",
+      "type": "double",
+      "doc": "Valor de Prêmio do Ramo ou da Cobertura em Reais. Formato: 16.2 decimais. Cardinalidade: [1..1]"
+    },
+    {
+      "name": "adicionalFracionamento",
+      "type": ["null", "double"],
+      "default": null,
+      "doc": "Adicional de Fracionamento do ramo ou cobertura. Formato: 16.2 decimais. Cardinalidade: [0..1]"
+    },
+    {
+      "name": "iof",
+      "type": ["null", "double"],
+      "default": null,
+      "doc": "Valor de IOF da Cobertura em Reais. Formato: 16.2 decimais. Cardinalidade: [0..1]"
+    },
+    {
+      "name": "custoAquisicao",
+      "type": ["null", "double"],
+      "default": null,
+      "doc": "Custo de Aquisição do ramo ou da cobertura. Formato: 16.2 decimais. Cardinalidade: [0..1]"
+    }
+  ]
+}

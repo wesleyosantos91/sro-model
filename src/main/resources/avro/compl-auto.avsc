@@ -1,0 +1,342 @@
+{
+  "type": "record",
+  "name": "ComplAuto",
+  "namespace": "io.github.wesleyosantos91.susep.sro.model.complauto",
+  "doc": "Representa informações complementares de veículos automotores no sistema SRO. Contém dados específicos sobre veículos segurados, incluindo identificação, características técnicas, coberturas e informações de condutores. Especificação: SUSEP SRO v2.0.0 - Aba COMPL_AUTO. Bounded Context: COMPL_AUTO (Complemento Automóvel). Aggregate Root: Sim",
+  "fields": [
+    {
+      "name": "endossoCodigo",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Identificador do endosso do documento. Cardinalidade: [0..1]. Tag: endosso_codigo. Tipo: String. Formato: -. Tamanho: 60. Condição: Validar o registro prévio do endosso por meio de um identificador de endosso já registrado. Observação: Inclusão de Condição Campo faz referência ao campo 'identificador do endosso' do bloco endosso do leiaute de endosso."
+    },
+    {
+      "name": "codigo",
+      "type": "string",
+      "doc": "Identificador do objeto segurado. Cardinalidade: [1..1]. Tag: codigo. Tipo: String. Formato: -. Tamanho: 50. Observação: O identificador deve ser único por objeto em cada apólice/bilhete ou em cada certificado e apólice/bilhete."
+    },
+    {
+      "name": "tipo",
+      "type": "int",
+      "doc": "Tipo do objeto segurado. Cardinalidade: [1..1]. Tag: tipo. Tipo: Int. Formato: 1 - Contrato 2 - Processo administrativo 3 - Processo judicial 4 - Automóvel 5 - Condutor 6 - Frota 99 - Outros. Tamanho: 2. Condição: Os tipos de objeto segurado representados pelos domínios 1, 2, 3 e 99 não devem ser aceitos para o registro do leiaute complementar auto. Observação: Inclusão de condição"
+    },
+    {
+      "name": "descricaoTipo",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Descrição do tipo do objeto segurado. Cardinalidade: [0..1]. Tag: descricao_tipo. Tipo: String. Formato: -. Tamanho: 500. Condição: Obrigatório quando o campo 'Tipo' for preenchido com 'Outros'. Observação: A condição não se aplica por não ser possível a inclusão o tipo do objeto segurado 99 - Outros"
+    },
+    {
+      "name": "descricaoObjeto",
+      "type": "string",
+      "doc": "Descrição do objeto segurado. Cardinalidade: [1..1]. Tag: descricao_objeto. Tipo: String. Formato: -. Tamanho: 1024"
+    },
+    {
+      "name": "identificacaoExataVeiculo",
+      "type": ["null", "int"],
+      "default": null,
+      "doc": "Identificação exata do veículo (Casco, RCF-A, APP, Assistência e Outras Coberturas). Cardinalidade: [0..1]. Tag: identificacao_exata_veiculo. Tipo: Int. Formato: 1 - Sim 2 - Não. Tamanho: 1"
+    },
+    {
+      "name": "modalidadeCasco",
+      "type": ["null", "int"],
+      "default": null,
+      "doc": "Modalidade de cobertura (Casco). Cardinalidade: [0..1]. Tag: modalidade_casco. Tipo: Int. Formato: 1 - Valor de mercado referenciado 2 - Valor determinado 3 - Critério diverso 99 - Outros. Tamanho: 2"
+    },
+    {
+      "name": "percentualTabelaReferencia",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Percentual em caso de cobertura contratada parcial (Casco). Cardinalidade: [0..1]. Tag: percentual_tabela_referencia. Tipo: Float. Formato: -. Tamanho: 3.9"
+    },
+    {
+      "name": "tabelaValorMedio",
+      "type": ["null", "int"],
+      "default": null,
+      "doc": "Tabela de referência adotada no plano (Casco). Cardinalidade: [0..1]. Tag: tabela_valor_medio. Tipo: Int. Formato: 1- Molicar 2- FIPE 3- Jornal do Carro 4- VD 99 - Outras. Tamanho: 2"
+    },
+    {
+      "name": "codigoModelo",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Código do modelo de acordo com a tabela de referência adotada no plano (Casco, RCF-A, APP, Assistência e Outras Coberturas). Cardinalidade: [0..1]. Tag: codigo_modelo. Tipo: String. Formato: -. Tamanho: 10"
+    },
+    {
+      "name": "anoModelo",
+      "type": ["null", "int"],
+      "default": null,
+      "doc": "Ano do modelo (Casco, RCF-A, APP, Assistência e Outras Coberturas). Cardinalidade: [0..1]. Tag: ano_modelo. Tipo: Int. Formato: -. Tamanho: 4"
+    },
+    {
+      "name": "categoriaTarifaria",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Categoria tarifária (Casco, RCF-A, APP, Assistência e Outras Coberturas). Cardinalidade: [0..1]. Tag: categoria_tarifaria. Tipo: String. Formato: Manual de Orientações para Envio de Dados páginas 130 -132. Tamanho: 3. Observação: http://www.susep.gov.br/setores-susep/cgeti/cosis/manual-de-orientacao-para-envio-de-dados-v05-2020.pdf"
+    },
+    {
+      "name": "cepRisco",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "CEP de risco (Casco, RCF-A, APP, Assistência e Outras Coberturas). Cardinalidade: [0..1]. Tag: cep_risco. Tipo: String. Formato: -. Tamanho: 8. Observação: Alteração de tamanho pós apontamento reunião Ofício - 07/02/23"
+    },
+    {
+      "name": "codigoUtilizacao",
+      "type": ["null", "int"],
+      "default": null,
+      "doc": "Código de utilização do veículo (Casco, RCF-A, APP, Assistência e Outras Coberturas). Cardinalidade: [0..1]. Tag: codigo_utilizacao. Tipo: Int. Formato: 1 - Lazer 2 - Locomoção diária 3 - Exercício do trabalho 99 - Outros. Tamanho: 2"
+    },
+    {
+      "name": "cepLocalidadeDestino",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "CEP da localidade de destino frequente do veículo (Casco, RCF-A, APP, Assistência e Outras Coberturas). Cardinalidade: [0..1]. Tag: cep_localidade_destino. Tipo: String. Formato: -. Tamanho: 8. Observação: Alteração de tamanho pós apontamento reunião Ofício - 07/02/23"
+    },
+    {
+      "name": "cepLocalidadePernoite",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "CEP da localidade de pernoite do veículo (Casco, RCF-A, APP, Assistência e Outras Coberturas). Cardinalidade: [0..1]. Tag: cep_localidade_pernoite. Tipo: String. Formato: -. Tamanho: 8. Observação: Alteração de tamanho pós apontamento reunião Ofício - 07/02/23"
+    },
+    {
+      "name": "percentualDescontoBonus",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Percentual de desconto por bônus (Casco, RCF-A, APP, Assistência e Outras Coberturas). Cardinalidade: [0..1]. Tag: percentual_desconto_bonus. Tipo: Float. Formato: -. Tamanho: 3.9"
+    },
+    {
+      "name": "classeBonus",
+      "type": ["null", "int"],
+      "default": null,
+      "doc": "Classe de bônus (Casco, RCF-A, APP, Assistência e Outras Coberturas). Cardinalidade: [0..1]. Tag: classe_bonus. Tipo: Int. Formato: -. Tamanho: 2"
+    },
+    {
+      "name": "coberturaAutomóvels",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "CoberturaAutomóvel",
+          "namespace": "io.github.wesleyosantos91.susep.sro.model.complauto",
+          "doc": "Representa Cobertura Automóvel no contexto de COMPL_AUTO. Especificação: SUSEP SRO v2.0.0 - Aba COMPL_AUTO. Grupo: Cobertura Automóvel",
+          "fields": [
+            {
+              "name": "grupoRamo",
+              "type": "string",
+              "doc": "Grupo e ramo da cobertura. Cardinalidade: [1..1]. Tag: grupo_ramo. Tipo: String. Formato: -. Tamanho: 4"
+            },
+            {
+              "name": "codigo",
+              "type": "int",
+              "doc": "Código da cobertura. Cardinalidade: [1..1]. Tag: codigo. Tipo: Int. Formato: Tabela de Coberturas. Tamanho: 5"
+            },
+            {
+              "name": "outrasDescricao",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Descrição / Nome da cobertura. Cardinalidade: [0..1]. Tag: outras_descricao. Tipo: String. Formato: -. Tamanho: 500. Condição: Obrigatório quando o campo 'Codigo' for preenchido com 'Outras'"
+            },
+            {
+              "name": "coberturaInternaSeguradora",
+              "type": "string",
+              "doc": "Cardinalidade: [1..1]. Tag: cobertura_interna_seguradora. Tipo: String. Formato: -. Tamanho: 50. Observação: Alteração de cardinalidade"
+            },
+            {
+              "name": "numeroProcesso",
+              "type": "string",
+              "doc": "Número do processo SUSEP relacionado à cobertura. Cardinalidade: [1..1]. Tag: numero_processo. Tipo: String. Formato: -. Tamanho: 50. Observação: 15414.999999/9999-99 Utilizar esse número para os casos em que não houver processo"
+            },
+            {
+              "name": "limiteMaximoIndenizacao",
+              "type": "string",
+              "doc": "Limite máximo de indenização (LMI). Cardinalidade: [1..1]. Tag: limite_maximo_indenizacao. Tipo: Double. Formato: -. Tamanho: 16.2"
+            },
+            {
+              "name": "limiteMaximoIndenizacaoReal",
+              "type": "string",
+              "doc": "Limite máximo de indenização (LMI) em reais. Cardinalidade: [1..1]. Tag: limite_maximo_indenizacao_real. Tipo: Double. Formato: -. Tamanho: 16.2"
+            },
+            {
+              "name": "dataInicio",
+              "type": {
+                "type": "int",
+                "logicalType": "date"
+              },
+              "doc": "Data de início de vigência da cobertura. Cardinalidade: [1..1]. Tag: data_inicio. Tipo: Date. Formato: AAAA-MM-DD. Tamanho: 10"
+            },
+            {
+              "name": "dataTermino",
+              "type": {
+                "type": "int",
+                "logicalType": "date"
+              },
+              "doc": "Data de fim de vigência da cobertura. Cardinalidade: [1..1]. Tag: data_termino. Tipo: Date. Formato: AAAA-MM-DD. Tamanho: 10"
+            },
+            {
+              "name": "coberturaPrincipal",
+              "type": "int",
+              "doc": "Cardinalidade: [1..1]. Tag: cobertura_principal. Tipo: Int. Formato: 1 - Sim 2 - Não. Tamanho: 1"
+            },
+            {
+              "name": "coberturaCaracteristica",
+              "type": "int",
+              "doc": "Cardinalidade: [1..1]. Tag: cobertura_caracteristica. Tipo: Int. Formato: 1 - Massificados 2 - Massificados microseguros 3 - Grandes Riscos. Tamanho: 2. Observação: Este campo é obrigatório deve observar a norma de grandes riscos, e o mais adequado é de que estivesse no bloco geral do documento. O seu preenchimento deve observar se a operação é caracterizada como de grandes riscos, caso contrário deve ser definida como massificados ou massificados de microsseguros, conforme o caso."
+            },
+            {
+              "name": "coberturaTipo",
+              "type": "int",
+              "doc": "Cardinalidade: [1..1]. Tag: cobertura_tipo. Tipo: Int. Formato: 1 - Paramétrico 2 - Intermitente 3 - Regular (comum) 4 - Capital Global 5 - Paramétrico e Intermitente. Tamanho: 2"
+            },
+            {
+              "name": "valorPremio",
+              "type": "string",
+              "doc": "Valor de prêmio da cobertura. Cardinalidade: [1..1]. Tag: valor_premio. Tipo: Double. Formato: -. Tamanho: 16.2. Condição: O campo deverá ser preenchido com 0,00 quando o campo 'limite_maximo_indenizacao_sublimite' for preenchido com o domínio '1' (sim). Observação: Inclusão de condição"
+            },
+            {
+              "name": "valorPremioReal",
+              "type": "string",
+              "doc": "Valor de prêmio da cobertura em reais. Cardinalidade: [1..1]. Tag: valor_premio_real. Tipo: Double. Formato: -. Tamanho: 16.2. Condição: O campo deverá ser preenchido com 0,00 quando o campo 'limite_maximo_indenizacao_sublimite' for preenchido com o domínio '1' (sim). Observação: Inclusão de condição"
+            },
+            {
+              "name": "iof",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Valor de IOF da cobertura em reais. Cardinalidade: [0..1]. Tag: iof. Tipo: Double. Formato: -. Tamanho: 16.2"
+            },
+            {
+              "name": "custo",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Valor do custo de aquisição da cobertura. Cardinalidade: [0..1]. Tag: custo. Tipo: Double. Formato: -. Tamanho: 16.2"
+            },
+            {
+              "name": "custoReal",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Valor do custo de aquisição da cobertura em reais. Cardinalidade: [0..1]. Tag: custo_real. Tipo: Double. Formato: -. Tamanho: 16.2"
+            },
+            {
+              "name": "tipoIndenizacao",
+              "type": ["null", "int"],
+              "default": null,
+              "doc": "Tipo de indenização por cobertura contratada (Casco). Cardinalidade: [0..1]. Tag: tipo_indenizacao. Tipo: Int. Formato: 1 - Integral 2 - Parcial 99 - Outros. Tamanho: 2"
+            },
+            {
+              "name": "percentualIndenizacaoParcial",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Cardinalidade: [0..1]. Tag: percentual_indenizacao_parcial. Tipo: Float. Tamanho: 3.9. Condição: Deve ser não negativo"
+            },
+            {
+              "name": "percentualLmi",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Percentual aplicado sobre o LMI que irá definir o valor a partir do qual haverá direito à indenização integral em caso de sinistro com indenização integral, necessário para a reparação dos prejuízos causados por eventual sinistro (Casco). Cardinalidade: [0..1]. Tag: percentual_lmi. Tipo: Float. Formato: -. Tamanho: 3.9. Condição: Deve ser não negativo"
+            },
+            {
+              "name": "diasCobertura",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Número de dias de cobertura para direito à indenização pelo valor de novo (Casco). Cardinalidade: [0..1]. Tag: dias_cobertura. Tipo: String. Formato: -. Tamanho: 4. Condição: Deve aceitar apenas números"
+            },
+            {
+              "name": "coberturaVinculada",
+              "type": ["null", "int"],
+              "default": null,
+              "doc": "Cobertura vinculada (RCF-A, APP, Assistência e Outras Coberturas). Cardinalidade: [0..1]. Tag: cobertura_vinculada. Tipo: Int. Formato: 1 - Veículo 2 - Condutor 99 - Outros. Tamanho: 2"
+            }
+          ]
+        }
+      },
+      "default": [],
+      "doc": "Lista de Cobertura Automóvel. Tipo: Lista de CoberturaAutomóvel"
+    },
+    {
+      "name": "franquias",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "Franquia",
+          "namespace": "io.github.wesleyosantos91.susep.sro.model.complauto",
+          "doc": "Representa Franquia no contexto de COMPL_AUTO. Especificação: SUSEP SRO v2.0.0 - Aba COMPL_AUTO. Grupo: Franquia",
+          "fields": [
+            {
+              "name": "franquiaTipo",
+              "type": "int",
+              "doc": "Cardinalidade: [1..1]. Tag: franquia_tipo. Tipo: Int. Formato: 1 - Reduzida 2 - Normal 3 - Majorada 4 - Isenta 5 - Flexível 99 - Outros. Tamanho: 2"
+            },
+            {
+              "name": "tipoDescricao",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Cardinalidade: [0..1]. Tag: tipo_descricao. Tipo: String. Formato: -. Tamanho: 1000. Condição: Obrigatório quando '99 - Outros'. Observação: Inclusão de condição Ampliação de tamanho do campo"
+            },
+            {
+              "name": "franquiaValor",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Cardinalidade: [0..1]. Tag: franquia_valor. Tipo: Double. Formato: -. Tamanho: 16.2. Observação: Alteração de cardinalidade"
+            },
+            {
+              "name": "franquiaDescricao",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Cardinalidade: [0..1]. Tag: franquia_descricao. Tipo: String. Formato: -. Tamanho: 500"
+            },
+            {
+              "name": "franquiaIndenizacaoIntegral",
+              "type": ["null", "int"],
+              "default": null,
+              "doc": "Franquia sobre indenização integral (Casco). Cardinalidade: [0..1]. Tag: franquia_indenizacao_integral. Tipo: Int. Formato: 1 - Sim 2 - Não. Tamanho: 1"
+            }
+          ]
+        }
+      },
+      "default": [],
+      "doc": "Lista de Franquia. Tipo: Lista de Franquia"
+    },
+    {
+      "name": "pessoasAssociadasCondutors",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "PessoasAssociadasCondutor",
+          "namespace": "io.github.wesleyosantos91.susep.sro.model.complauto",
+          "doc": "Representa Pessoas associadas - Condutor no contexto de COMPL_AUTO. Especificação: SUSEP SRO v2.0.0 - Aba COMPL_AUTO. Grupo: Pessoas associadas - Condutor",
+          "fields": [
+            {
+              "name": "documento",
+              "type": ["null", "string"],
+              "default": null,
+              "doc": "Documento de identificação da pessoa associada à apólice. Cardinalidade: [0..1]. Tag: documento. Tipo: String. Formato: -. Tamanho: 40. Observação: Alteração de cardinalidade"
+            },
+            {
+              "name": "sexoCondutor",
+              "type": ["null", "int"],
+              "default": null,
+              "doc": "Sexo do condutor utilizado para a taxação (Casco, RCF-A, APP, Assistência e Outras Coberturas). Cardinalidade: [0..1]. Tag: sexo_condutor. Tipo: Int. Formato: 1 - Masculino 2 - Feminino 3 - Não declarado 99 - Outros. Tamanho: 2"
+            },
+            {
+              "name": "dataNascimento",
+              "type": ["null", {
+                "type": "int",
+                "logicalType": "date"
+              }],
+              "default": null,
+              "doc": "Data de nascimento do condutor (Casco, RCF-A, APP, Assistência e Outras Coberturas). Cardinalidade: [0..1]. Tag: data_nascimento. Tipo: Date. Formato: AAAA-MM-DD. Tamanho: 10"
+            },
+            {
+              "name": "tempoHabilitacao",
+              "type": ["null", "int"],
+              "default": null,
+              "doc": "Tempo de habilitação do condutor utilizado para taxação (Casco, RCF-A, APP, Assistência e Outras Coberturas). Cardinalidade: [0..1]. Tag: tempo_habilitacao. Tipo: Int. Formato: -. Tamanho: 3"
+            }
+          ]
+        }
+      },
+      "default": [],
+      "doc": "Lista de Pessoas associadas - Condutor. Tipo: Lista de PessoasAssociadasCondutor"
+    }
+  ]
+}
