@@ -8,11 +8,46 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 ## [Unreleased]
 
 ### Planejado
-- Publicação no Maven Central
+
 - Exemplos de integração
 - Mais casos de teste para cenários edge
 
-## [0.0.1] - 2025-11-22
+## [0.0.2] - 2025-11-25
+
+### 🐛 Corrigido
+
+- Corrigidos 15 erros de compilação relacionados a referências de variáveis inexistentes:
+  - `Endosso.java`: Corrigido uso de `tipoEndosso` para `endossoTipo` e `tipoDocumentoReferenciado` para `tipoDocumentoEndossado`
+  - `CoberturaAutomóvel.java`: Removidas validações de 8 campos inexistentes (placaVeiculo, chassiVeiculo, renavamVeiculo, ufLicenciamento, identificadorOutros, cpfCondutor, codigoPostalOcorrencia, codigoMunicipioOcorrencia)
+  - `MovimentoPremio.java`: Removidas validações de 4 campos inexistentes (estruturaComercialSusep, indicadorSimplificadaOperacao, codigoFilial)
+
+### ✅ Testes
+
+- Corrigidos 4 testes com dados inválidos:
+  - `ComplAutoPackageTest`: Ajustada data futura para data passada em CoberturaAutomóvel
+  - `EndossoPackageTest`: Corrigido UUID inválido para formato RFC 4122 válido e ajustadas datas
+  - `MovimentoPremioPackageTest`: Corrigido UUID inválido e ajustadas datas de vigência
+  - `SinistroPackageTest`: Corrigido código do objeto para ter exatamente 50 caracteres
+- **207 testes passando** (0 falhas, 0 erros)
+- Mantida cobertura de 99% de linhas
+- Mantido mutation score de 94%
+
+### ✨ Adicionado
+
+- Schemas Apache Avro para todos os bounded contexts (7 arquivos .avsc)
+- Badge Maven Central no README
+
+## [0.0.1] - 2025-11-24
+
+### 🔒 Segurança
+
+- Validações fail-fast expandidas para todas as classes de domínio e subdomínios (Documento, Endosso, Movimento Prêmio, CCG, ComplAuto, Movimento Sinistro e Sinistro), garantindo presença de campos obrigatórios, limites de tamanho, domínios válidos e consistência temporal.
+
+### ♻️ Refatoração
+
+- Defensive copies para coleções em agregados aninhados, evitando mutabilidade externa após construção.
+
+## [0.0.0] - 2025-11-22
 
 ### 🎉 Primeira Release Oficial
 

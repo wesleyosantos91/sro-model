@@ -1,6 +1,13 @@
 package io.github.wesleyosantos91.susep.sro.model.sinistro;
 
 import java.time.LocalDate;
+import java.util.Objects;
+
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireExactLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireMaxLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireNonBlank;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requirePastOrPresent;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireRange;
 
 /**
  * Representa Coberturas afetadas no contexto de Sinistro.
@@ -103,4 +110,18 @@ public record CoberturaAfetada(
      * <p><b>Tamanho:</b> 10</p>
      */
     LocalDate dataReclamacaoTerceiroCobertura
-) {}
+) {
+    public CoberturaAfetada {
+        requireNonBlank(grupoRamo, "Grupo e ramo é obrigatório");
+        requireExactLength(grupoRamo, 4, "Grupo e ramo");
+
+        requireRange(sinistroCoberturaCodigo, 0, 99999, "Código da cobertura afetada");
+        requireMaxLength(codigoObjeto, 50, "Código do objeto");
+        requireMaxLength(coberturaInternaSeguradora, 50, "Cobertura interna da seguradora");
+        requireMaxLength(sinistroCoberturaOutros, 500, "Descrição da cobertura");
+
+        requirePastOrPresent(dataAvisoCobertura, "Data de aviso da cobertura");
+        requirePastOrPresent(dataRegistroSeguradoraCobertura, "Data de registro na seguradora");
+        requirePastOrPresent(dataReclamacaoTerceiroCobertura, "Data de reclamação do terceiro");
+    }
+}

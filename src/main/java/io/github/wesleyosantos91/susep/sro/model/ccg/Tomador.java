@@ -1,6 +1,12 @@
 package io.github.wesleyosantos91.susep.sro.model.ccg;
 
 import java.math.BigDecimal;
+import java.util.Objects;
+
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireMaxLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireNonBlank;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requirePositive;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireRange;
 
 /**
  * Representa Tomador no contexto de CCG.
@@ -70,4 +76,18 @@ Reunião 24/01/2023</p>
      * <p><b>Tamanho:</b> 16.2</p>
      */
     BigDecimal limiteAprovado
-) {}
+) {
+    public Tomador {
+        requireNonBlank(documento, "Documento do tomador é obrigatório");
+        Objects.requireNonNull(tipoDocumento, "Tipo de documento é obrigatório");
+        Objects.requireNonNull(controladorGe, "Indicador de controlador é obrigatório");
+        requireNonBlank(razaoSocial, "Razão social é obrigatória");
+        Objects.requireNonNull(limiteAprovado, "Limite aprovado é obrigatório");
+
+        requireMaxLength(documento, 40, "Documento do tomador");
+        requireRange(tipoDocumento, 1, 99, "Tipo de documento");
+        requireRange(controladorGe, 1, 2, "Indicador de controlador GE");
+        requireMaxLength(razaoSocial, 144, "Razão social");
+        requirePositive(limiteAprovado, "Limite aprovado");
+    }
+}

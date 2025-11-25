@@ -1,5 +1,8 @@
 package io.github.wesleyosantos91.susep.sro.model.sinistro;
 
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireMaxLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireNonBlank;
+
 /**
  * Representa Documentos Afetados no contexto de Sinistro.
  *
@@ -45,4 +48,11 @@ Campo movimentado do bloco 'dados gerais'</p>
 Campo movimentado do bloco 'dados gerais'</p>
      */
     String numeroEndosso
-) {}
+) {
+    public DocumentoAfetado {
+        requireNonBlank(apoliceCodigo, "Código da apólice é obrigatório");
+        requireMaxLength(apoliceCodigo, 60, "Código da apólice");
+        requireMaxLength(certificadoCodigo, 60, "Código do certificado");
+        requireMaxLength(numeroEndosso, 60, "Número do endosso");
+    }
+}

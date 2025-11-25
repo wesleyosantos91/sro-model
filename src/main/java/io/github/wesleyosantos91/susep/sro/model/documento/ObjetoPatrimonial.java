@@ -1,5 +1,9 @@
 package io.github.wesleyosantos91.susep.sro.model.documento;
 
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireExactLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireMaxLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireRange;
+
 /**
  * Record representando ObjetoPatrimonial
  * <p>Tag: objeto_patrimonial</p>
@@ -45,4 +49,14 @@ public record ObjetoPatrimonial(
      * <p><strong>Observação:</strong> Anexo X - Patrimonial</p>
      */
     String codigoCnae
-) {}
+) {
+    public ObjetoPatrimonial {
+        requireRange(tipoImovelSegurado, 1, 99, "Tipo do imóvel segurado");
+        requireRange(tipoEstruturacaoCondominio, 1, 99, "Tipo de estruturação do condomínio");
+
+        requireMaxLength(codigoPostal, 30, "Código postal");
+        if (codigoCnae != null) {
+            requireExactLength(codigoCnae, 7, "Código CNAE");
+        }
+    }
+}

@@ -123,4 +123,30 @@ public record Sinistro(
      * <p><b>Tipo:</b> Lista de Automovel</p>
      */
     List<Automovel> automovels
-) {}
+) {
+
+    public Sinistro {
+        Objects.requireNonNull(status, "Status do sinistro é obrigatório");
+        Objects.requireNonNull(dataAlteracaoStatus, "Data de alteração é obrigatória");
+        Objects.requireNonNull(dataOcorrencia, "Data de ocorrência é obrigatória");
+        Objects.requireNonNull(dataAviso, "Data de aviso é obrigatória");
+        Objects.requireNonNull(dataRegistroSeguradora, "Data de registro é obrigatória");
+
+        ValidationUtils.requireRange(status, 1, 6, "Status do sinistro");
+        ValidationUtils.requirePastOrPresent(dataOcorrencia, "Data de ocorrência");
+        ValidationUtils.requirePastOrPresent(dataAviso, "Data de aviso");
+        ValidationUtils.requirePastOrPresent(dataRegistroSeguradora, "Data de registro na seguradora");
+        ValidationUtils.requirePastOrPresent(dataAlteracaoStatus, "Data de alteração do status");
+        ValidationUtils.requireAfterOrEqual(
+            dataAviso,
+            dataOcorrencia,
+            "Data de aviso deve ser igual ou posterior à data de ocorrência"
+        );
+
+        justificativanegativas = justificativanegativas != null ? List.copyOf(justificativanegativas) : List.of();
+        documentoafetados = documentoafetados != null ? List.copyOf(documentoafetados) : List.of();
+        coberturaafetadas = coberturaafetadas != null ? List.copyOf(coberturaafetadas) : List.of();
+        vistoriarurals = vistoriarurals != null ? List.copyOf(vistoriarurals) : List.of();
+        automovels = automovels != null ? List.copyOf(automovels) : List.of();
+    }
+}

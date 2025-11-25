@@ -1,6 +1,13 @@
 package io.github.wesleyosantos91.susep.sro.model.sinistro;
 
 import java.time.LocalDate;
+import java.util.Objects;
+
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireExactLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireMaxLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireNonBlank;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requirePastOrPresent;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireRange;
 
 /**
  * Representa Dados Automóvel no contexto de Sinistro.
@@ -85,4 +92,16 @@ public record Automovel(
      * <p><b>Tamanho:</b> 30</p>
      */
     String cepLocalidadeSinistro
-) {}
+) {
+    public Automovel {
+        requireNonBlank(codigoObjeto, "Código do objeto é obrigatório");
+        requireExactLength(codigoObjeto, 50, "Código do objeto");
+
+        requireRange(causaSinistro, 1, 99, "Causa do sinistro");
+        requireRange(sexoCondutor, 1, 99, "Sexo do condutor");
+
+        requirePastOrPresent(dataNascimento, "Data de nascimento do condutor");
+        requireExactLength(paisOcorrenciaSinistro, 3, "País de ocorrência");
+        requireMaxLength(cepLocalidadeSinistro, 30, "CEP da localidade do sinistro");
+    }
+}

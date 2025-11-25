@@ -1,5 +1,12 @@
 package io.github.wesleyosantos91.susep.sro.model.documento;
 
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireMaxLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requirePositive;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireRange;
+
+import io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils;
+import java.util.Objects;
+
 /**
  * Record representando Franquia
  * <p>Tag: franquia</p>
@@ -36,4 +43,20 @@ public record Franquia(
      * <p><strong>Tamanho:</strong> 500</p>
      */
     String franquiaDescricao
-) {}
+) {
+    public Franquia {
+        Objects.requireNonNull(franquiaTipo, "Tipo de franquia é obrigatório");
+
+        requireRange(franquiaTipo, 1, 99, "Tipo de franquia");
+        requireMaxLength(tipoDescricao, 1000, "Descrição do tipo de franquia");
+        requirePositive(franquiaValor, "Valor da franquia");
+        requireMaxLength(franquiaDescricao, 500, "Descrição da franquia");
+
+        if (franquiaTipo == 99) {
+            ValidationUtils.requireNonBlank(
+                tipoDescricao,
+                "Descrição do tipo de franquia é obrigatória quando o tipo é 99"
+            );
+        }
+    }
+}

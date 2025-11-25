@@ -1,6 +1,10 @@
 package io.github.wesleyosantos91.susep.sro.model.movimentosinistro;
 
 import java.math.BigDecimal;
+import java.util.Objects;
+
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requirePositive;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireRange;
 
 /**
  * Representa Adicionais (Despesas financeiras adicionais ao valor do movimento).
@@ -45,4 +49,14 @@ public record Adicionais(
      * <p><b>Tamanho:</b> 16.2</p>
      */
     BigDecimal valorMovimentoAdicionalReais
-) {}
+) {
+    public Adicionais {
+        Objects.requireNonNull(tipoAdicional, "Tipo adicional é obrigatório");
+        Objects.requireNonNull(valorMovimentoAdicional, "Valor adicional é obrigatório");
+        Objects.requireNonNull(valorMovimentoAdicionalReais, "Valor adicional em reais é obrigatório");
+
+        requireRange(tipoAdicional, 1, 99, "Tipo adicional");
+        requirePositive(valorMovimentoAdicional, "Valor adicional");
+        requirePositive(valorMovimentoAdicionalReais, "Valor adicional em reais");
+    }
+}

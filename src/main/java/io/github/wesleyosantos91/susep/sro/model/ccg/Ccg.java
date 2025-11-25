@@ -2,6 +2,7 @@ package io.github.wesleyosantos91.susep.sro.model.ccg;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Representa um Contrato de Contragarantia (CCG) no sistema SRO.
@@ -47,4 +48,14 @@ public record Ccg(
      * <p><b>Tipo:</b> Lista de Fiador</p>
      */
     List<Fiador> fiadors
-) {}
+) {
+    public Ccg {
+        Objects.requireNonNull(tomadors, "Tomadores são obrigatórios");
+        Objects.requireNonNull(colaterals, "Colaterais são obrigatórios");
+        Objects.requireNonNull(fiadors, "Fiadores são obrigatórios");
+
+        tomadors = List.copyOf(tomadors);
+        colaterals = List.copyOf(colaterals);
+        fiadors = List.copyOf(fiadors);
+    }
+}

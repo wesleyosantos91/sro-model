@@ -69,13 +69,15 @@ mvn javadoc:javadoc
 
 ## 📦 Uso
 
-### Maven Dependency (futuro)
+### Maven Dependency
+
+Disponível no Maven Central a partir da versão `0.0.2`.
 
 ```xml
 <dependency>
-    <groupId>io.github.wesleyosantos91.susep.sro</groupId>
-    <artifactId>sro-model</artifactId>
-    <version>0.0.1</version>
+  <groupId>io.github.wesleyosantos91.susep.sro</groupId>
+  <artifactId>sro-model</artifactId>
+  <version>0.0.2</version>
 </dependency>
 ```
 
@@ -265,6 +267,16 @@ Este projeto está sob a licença Apache 2.0 - veja o arquivo [LICENSE](LICENSE)
 - [Java Records](https://openjdk.org/jeps/395)
 
 ## 📝 Changelog
+
+### [v0.0.2](https://github.com/wesleyosantos91/sro-model/releases/tag/v0.0.2) (2025-11-24)
+
+#### 🔒 Segurança
+
+- Validações fail-fast expandidas para todas as classes de domínio e subdomínios, cobrindo campos obrigatórios, tamanhos, domínios válidos e consistência temporal.
+
+#### ♻️ Refatoração
+
+- Defensive copies adicionados a coleções em agregados e registros aninhados, evitando mutabilidade externa após a construção.
 
 ### [v0.0.1](https://github.com/wesleyosantos91/sro-model/releases/tag/v0.0.1) (2025-11-22)
 

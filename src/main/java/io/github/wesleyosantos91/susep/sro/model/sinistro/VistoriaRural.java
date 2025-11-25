@@ -1,5 +1,8 @@
 package io.github.wesleyosantos91.susep.sro.model.sinistro;
 
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireExactLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireMaxLength;
+
 /**
  * Representa Dados Vistoria Rural no contexto de Sinistro.
  *
@@ -41,4 +44,10 @@ public record VistoriaRural(
      * <p><b>Observação:</b> Anexo VIII - Rural</p>
      */
     String paisVistoria
-) {}
+) {
+    public VistoriaRural {
+        requireMaxLength(codigoPostalVistoria, 30, "Código postal da vistoria");
+        requireExactLength(ufVistoria, 2, "UF da vistoria");
+        requireExactLength(paisVistoria, 3, "País da vistoria");
+    }
+}

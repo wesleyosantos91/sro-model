@@ -40,7 +40,7 @@ class SinistroPackageTest {
 
     @Test
     void deveCriarAutomovel() {
-        var obj = new Automovel("OBJ1", null, null, null, null, null);
+        var obj = new Automovel("12345678901234567890123456789012345678901234567890", null, null, null, null, null);
         assertThat(obj).isNotNull();
     }
 }

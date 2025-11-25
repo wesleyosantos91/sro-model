@@ -1,6 +1,11 @@
 package io.github.wesleyosantos91.susep.sro.model.documento;
 
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireMaxLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireNonBlank;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requirePastOrPresent;
+
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Record representando Ccg
@@ -27,4 +32,12 @@ public record Ccg(
      * <p><strong>Observação:</strong> Campo aplicável quando o CCG for vinculado em data posterior ao Registro da Apólice/Endosso.</p>
      */
     LocalDate dataVinculacao
-) {}
+) {
+    public Ccg {
+        Objects.requireNonNull(ccgIdentificacao, "Identificação do CCG é obrigatória");
+
+        requireNonBlank(ccgIdentificacao, "Identificação do CCG é obrigatória");
+        requireMaxLength(ccgIdentificacao, 100, "Identificação do CCG");
+        requirePastOrPresent(dataVinculacao, "Data de vinculação do CCG");
+    }
+}

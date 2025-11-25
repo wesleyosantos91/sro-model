@@ -1,6 +1,11 @@
 package io.github.wesleyosantos91.susep.sro.model.complauto;
 
 import java.time.LocalDate;
+import java.util.Objects;
+
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireMaxLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requirePastOrPresent;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireRange;
 
 /**
  * Representa Pessoas associadas - Condutor no contexto de COMPL_AUTO.
@@ -56,4 +61,13 @@ public record PessoasAssociadasCondutor(
      * <p><b>Tamanho:</b> 3</p>
      */
     Integer tempoHabilitacao
-) {}
+) {
+    public PessoasAssociadasCondutor {
+        requireMaxLength(documento, 40, "Documento do condutor");
+        requireRange(sexoCondutor, 1, 99, "Sexo do condutor");
+        requirePastOrPresent(dataNascimento, "Data de nascimento do condutor");
+        if (tempoHabilitacao != null && tempoHabilitacao < 0) {
+            throw new IllegalArgumentException("Tempo de habilitação não pode ser negativo");
+        }
+    }
+}

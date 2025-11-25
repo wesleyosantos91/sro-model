@@ -281,4 +281,51 @@ public record MovimentoPremio(
      * <p><strong>Observação:</strong> Os valores de custo de aquisição deste bloco correspodem ao valor de custo de aquisição tal como no bloco de coberturas dos leiautes 1 - Documento e 2 - Endosso (vide Manual de Orientação do SRO)</p>
      */
     Double custoAquisicao
-) {}
+) {
+
+    private static final Pattern UUID_PATTERN = Pattern.compile(
+        "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    );
+
+    public MovimentoPremio {
+        Objects.requireNonNull(uuid, "UUID é obrigatório");
+        Objects.requireNonNull(codigoSeguradora, "Código da seguradora é obrigatório");
+        Objects.requireNonNull(dataRegistro, "Data de registro é obrigatória");
+        Objects.requireNonNull(dataAlteracao, "Data de alteração é obrigatória");
+        Objects.requireNonNull(indicadorExclusao, "Indicador de exclusão é obrigatório");
+        Objects.requireNonNull(apoliceCodigo, "Código da apólice é obrigatório");
+        Objects.requireNonNull(identificadorMovimento, "Identificador do movimento é obrigatório");
+        Objects.requireNonNull(moeda, "Moeda é obrigatória");
+        Objects.requireNonNull(valorMovimento, "Valor do movimento é obrigatório");
+        Objects.requireNonNull(valorMovimentoReal, "Valor do movimento em reais é obrigatório");
+        Objects.requireNonNull(dataMovimento, "Data do movimento é obrigatória");
+        Objects.requireNonNull(tipoMovimento, "Tipo do movimento é obrigatório");
+        Objects.requireNonNull(grupoRamo, "Grupo/ramo é obrigatório");
+        Objects.requireNonNull(codigo, "Identificador do objeto segurado é obrigatório");
+        Objects.requireNonNull(coberturaInternaSeguradora, "Cobertura interna é obrigatória");
+
+        if (!UUID_PATTERN.matcher(uuid.toLowerCase()).matches()) {
+            throw new IllegalArgumentException("UUID deve estar no formato padrão");
+        }
+
+        ValidationUtils.requireExactLength(codigoSeguradora, 5, "Código da seguradora");
+        ValidationUtils.requireMaxLength(anotacao, 500, "Anotação");
+        ValidationUtils.requireMaxLength(apoliceCodigo, 60, "Código da apólice");
+        ValidationUtils.requireMaxLength(certificadoCodigo, 60, "Certificado");
+        ValidationUtils.requireMaxLength(endossoCodigo, 60, "Endosso");
+        ValidationUtils.requireExactLength(moeda, 3, "Moeda");
+        ValidationUtils.requireExactLength(grupoRamo, 4, "Grupo e ramo");
+        ValidationUtils.requireMaxLength(codigo, 50, "Identificador do objeto segurado");
+        ValidationUtils.requireMaxLength(coberturaInternaSeguradora, 50, "Cobertura interna");
+
+        ValidationUtils.requireRange(indicadorExclusao, 1, 2, "Indicador de exclusão");
+        ValidationUtils.requireRange(tipoMovimento, 1, 14, "Tipo de movimento");
+        ValidationUtils.requirePositive(valorMovimento, "Valor do movimento");
+        ValidationUtils.requirePositive(valorMovimentoReal, "Valor do movimento em reais");
+
+        ValidationUtils.requirePastOrPresent(dataRegistro, "Data de registro");
+        ValidationUtils.requirePastOrPresent(dataAlteracao, "Data de alteração");
+        ValidationUtils.requirePastOrPresent(dataMovimento, "Data do movimento");
+        ValidationUtils.requirePastOrPresent(dataVencimento, "Data de vencimento");
+    }
+}
