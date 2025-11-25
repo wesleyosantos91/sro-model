@@ -20,7 +20,7 @@ class ComplAutoPackageTest {
     @Test
     void deveCriarCoberturaAutomovel() {
         var obj = new CoberturaAutomóvel("0531", 1, null, "INT", "PROC", 
-            BigDecimal.TEN, BigDecimal.TEN, LocalDate.now(), LocalDate.now().plusYears(1),
+            BigDecimal.TEN, BigDecimal.TEN, LocalDate.now().minusDays(1), LocalDate.now(),
             1, 1, 1, BigDecimal.TEN, BigDecimal.TEN, null, null, null, 
             null, null, null, null, null);
         assertThat(obj).isNotNull();

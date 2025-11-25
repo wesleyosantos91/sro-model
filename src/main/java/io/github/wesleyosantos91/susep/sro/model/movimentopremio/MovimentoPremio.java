@@ -303,15 +303,12 @@ public record MovimentoPremio(
         Objects.requireNonNull(grupoRamo, "Grupo/ramo é obrigatório");
         Objects.requireNonNull(codigo, "Identificador do objeto segurado é obrigatório");
         Objects.requireNonNull(coberturaInternaSeguradora, "Cobertura interna é obrigatória");
-        Objects.requireNonNull(estruturaComercialSusep, "Estrutura comercial é obrigatória");
-        Objects.requireNonNull(indicadorSimplificadaOperacao, "Indicador de operação é obrigatório");
 
         if (!UUID_PATTERN.matcher(uuid.toLowerCase()).matches()) {
             throw new IllegalArgumentException("UUID deve estar no formato padrão");
         }
 
         ValidationUtils.requireExactLength(codigoSeguradora, 5, "Código da seguradora");
-        ValidationUtils.requireExactLength(codigoFilial, 4, "Código da filial");
         ValidationUtils.requireMaxLength(anotacao, 500, "Anotação");
         ValidationUtils.requireMaxLength(apoliceCodigo, 60, "Código da apólice");
         ValidationUtils.requireMaxLength(certificadoCodigo, 60, "Certificado");
@@ -320,7 +317,6 @@ public record MovimentoPremio(
         ValidationUtils.requireExactLength(grupoRamo, 4, "Grupo e ramo");
         ValidationUtils.requireMaxLength(codigo, 50, "Identificador do objeto segurado");
         ValidationUtils.requireMaxLength(coberturaInternaSeguradora, 50, "Cobertura interna");
-        ValidationUtils.requireMaxLength(estruturaComercialSusep, 7, "Estrutura comercial");
 
         ValidationUtils.requireRange(indicadorExclusao, 1, 2, "Indicador de exclusão");
         ValidationUtils.requireRange(tipoMovimento, 1, 14, "Tipo de movimento");

@@ -309,14 +309,6 @@ Utilizar esse número para os casos em que não houver processo</p>
         requireMaxLength(outrasDescricao, 500, "Descrição da cobertura");
         requireMaxLength(coberturaInternaSeguradora, 50, "Cobertura interna da seguradora");
         requireMaxLength(numeroProcesso, 50, "Número do processo");
-        requireMaxLength(placaVeiculo, 7, "Placa do veículo");
-        requireMaxLength(chassiVeiculo, 17, "Chassi do veículo");
-        requireMaxLength(renavamVeiculo, 11, "RENAVAM");
-        requireMaxLength(ufLicenciamento, 2, "UF de licenciamento");
-        requireMaxLength(identificadorOutros, 50, "Identificador de outros veículos");
-        requireMaxLength(cpfCondutor, 11, "CPF do condutor");
-        requireMaxLength(codigoPostalOcorrencia, 30, "Código postal da ocorrência");
-        requireMaxLength(codigoMunicipioOcorrencia, 7, "Município da ocorrência");
         requireMaxLength(diasCobertura, 4, "Dias de cobertura");
 
         if (dataTermino.isBefore(dataInicio)) {

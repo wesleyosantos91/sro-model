@@ -338,8 +338,8 @@ public record Endosso(
         Objects.requireNonNull(dataRegistro, "Data de registro é obrigatória");
         Objects.requireNonNull(dataAlteracao, "Data de alteração é obrigatória");
         Objects.requireNonNull(indicadorExclusao, "Indicador de exclusão é obrigatório");
-        Objects.requireNonNull(tipoEndosso, "Tipo de endosso é obrigatório");
-        Objects.requireNonNull(tipoDocumentoReferenciado, "Tipo de documento é obrigatório");
+        Objects.requireNonNull(endossoTipo, "Tipo de endosso é obrigatório");
+        Objects.requireNonNull(tipoDocumentoEndossado, "Tipo de documento é obrigatório");
         Objects.requireNonNull(apoliceCodigo, "Código da apólice é obrigatório");
         Objects.requireNonNull(tipoEmissao, "Tipo de emissão é obrigatório");
         Objects.requireNonNull(dataEmissao, "Data de emissão é obrigatória");
@@ -363,7 +363,7 @@ public record Endosso(
         ValidationUtils.requireExactLength(moedaApolice, 3, "Moeda");
 
         ValidationUtils.requireRange(indicadorExclusao, 1, 2, "Indicador de exclusão");
-        ValidationUtils.requireRange(tipoDocumentoReferenciado, 1, 11, "Tipo de documento");
+        ValidationUtils.requireRange(tipoDocumentoEndossado, 1, 11, "Tipo de documento");
         ValidationUtils.requireRange(tipoEmissao, 1, 2, "Tipo de emissão");
         ValidationUtils.requirePositive(limiteMaximoGarantia, "Limite máximo de garantia");
         ValidationUtils.requirePositive(limiteMaximoGarantiaReal, "Limite máximo de garantia em reais");
