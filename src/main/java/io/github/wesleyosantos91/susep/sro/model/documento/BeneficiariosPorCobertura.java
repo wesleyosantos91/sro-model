@@ -1,5 +1,8 @@
 package io.github.wesleyosantos91.susep.sro.model.documento;
 
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireExactLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireNonBlank;
+
 /**
  * Record representando BeneficiariosPorCobertura
  * <p>Tag: beneficiarios_por_cobertura</p>
@@ -30,4 +33,14 @@ public record BeneficiariosPorCobertura(
      * <p><strong>Tamanho:</strong> 50</p>
      */
     String codigoInternoCoberturaBeneficiarios
-) {}
+) {
+    public BeneficiariosPorCobertura {
+        requireNonBlank(identificadorObjetoSeguradoBeneficiarios, "Identificador do objeto segurado é obrigatório");
+        requireNonBlank(grupoRamoCoberturaBeneficiarios, "Grupo e ramo da cobertura é obrigatório");
+        requireNonBlank(codigoInternoCoberturaBeneficiarios, "Código interno da cobertura é obrigatório");
+
+        requireExactLength(grupoRamoCoberturaBeneficiarios, 4, "Grupo e ramo da cobertura");
+        requireExactLength(identificadorObjetoSeguradoBeneficiarios, 50, "Identificador do objeto segurado");
+        requireExactLength(codigoInternoCoberturaBeneficiarios, 50, "Código interno da cobertura");
+    }
+}

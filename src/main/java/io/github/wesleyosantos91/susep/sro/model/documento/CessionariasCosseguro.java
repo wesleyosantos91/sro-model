@@ -1,5 +1,11 @@
 package io.github.wesleyosantos91.susep.sro.model.documento;
 
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireExactLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireNonBlank;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requirePositive;
+
+import java.util.Objects;
+
 /**
  * Record representando CessionariasCosseguro
  * <p>Tag: cessionarias_cosseguro</p>
@@ -22,4 +28,13 @@ public record CessionariasCosseguro(
      * <p><strong>Tamanho:</strong> 3.9</p>
      */
     Float percentualCedido
-) {}
+) {
+    public CessionariasCosseguro {
+        Objects.requireNonNull(codigoCosseguradora, "Código da congênere é obrigatório");
+        Objects.requireNonNull(percentualCedido, "Percentual cedido é obrigatório");
+
+        requireNonBlank(codigoCosseguradora, "Código da congênere é obrigatório");
+        requireExactLength(codigoCosseguradora, 5, "Código da congênere");
+        requirePositive(percentualCedido, "Percentual cedido");
+    }
+}

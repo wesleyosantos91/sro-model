@@ -1,5 +1,10 @@
 package io.github.wesleyosantos91.susep.sro.model.sinistro;
 
+import java.util.Objects;
+
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireMaxLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireRange;
+
 /**
  * Representa Justificativa da Negativa no contexto de Sinistro.
  *
@@ -39,4 +44,11 @@ public record JustificativaNegativa(
 Alteração de cardinalidade</p>
      */
     String descricaoJustificativa
-) {}
+) {
+    public JustificativaNegativa {
+        Objects.requireNonNull(justificativa, "Justificativa é obrigatória");
+
+        requireRange(justificativa, 1, 99, "Justificativa da negativa");
+        requireMaxLength(descricaoJustificativa, 1024, "Descrição da justificativa");
+    }
+}

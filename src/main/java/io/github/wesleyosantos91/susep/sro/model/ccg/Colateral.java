@@ -1,6 +1,11 @@
 package io.github.wesleyosantos91.susep.sro.model.ccg;
 
 import java.math.BigDecimal;
+import java.util.Objects;
+
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireMaxLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requirePositive;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireRange;
 
 /**
  * Representa Colateral no contexto de CCG.
@@ -55,4 +60,18 @@ public record Colateral(
      * <p><b>Tamanho:</b> 100</p>
      */
     String paisAtivoColateral
-) {}
+) {
+    public Colateral {
+        Objects.requireNonNull(tipoAtivoColateral, "Tipo de ativo do colateral é obrigatório");
+        Objects.requireNonNull(valorAtivoColateral, "Valor do ativo do colateral é obrigatório");
+        Objects.requireNonNull(paisAtivoColateral, "País do ativo colateral é obrigatório");
+
+        requireRange(tipoAtivoColateral, 1, 99, "Tipo de ativo do colateral");
+        requirePositive(valorAtivoColateral, "Valor do ativo do colateral");
+        requireMaxLength(paisAtivoColateral, 100, "País do ativo colateral");
+
+        if (ufAtivoColateral != null && ufAtivoColateral.length() != 2) {
+            throw new IllegalArgumentException("UF do ativo colateral deve ter 2 caracteres");
+        }
+    }
+}

@@ -1,5 +1,12 @@
 package io.github.wesleyosantos91.susep.sro.model.ccg;
 
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireExactLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireMaxLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireNonBlank;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireRange;
+
+import java.util.Objects;
+
 /**
  * Representa Fiador no contexto de CCG.
  *
@@ -24,13 +31,9 @@ public record Fiador(
      * <p><b>Cardinalidade:</b> [1..1]</p>
      * <p><b>Tag:</b> tipo_documento</p>
      * <p><b>Tipo:</b> Int</p>
-     * <p><b>Formato:</b> 1 - CPF
-2 - CNPJ
-3 - Passaporte
-99 - Outros</p>
+     * <p><b>Formato:</b> 1 - CPF, 2 - CNPJ, 3 - Passaporte, 99 - Outros</p>
      * <p><b>Tamanho:</b> 2</p>
-     * <p><b>Observação:</b> Inclusão de domínio 3 - Passaporte para padronização
-Reunião 24/01/2023</p>
+     * <p><b>Observação:</b> Inclusão de domínio 3 - Passaporte para padronização Reunião 24/01/2023</p>
      */
     Integer tipoDocumento,
 
@@ -44,4 +47,20 @@ Reunião 24/01/2023</p>
      * <p><b>Tamanho:</b> 144</p>
      */
     String razaoSocial
-) {}
+) {
+    public Fiador {
+        Objects.requireNonNull(documento, "Documento do fiador é obrigatório");
+        Objects.requireNonNull(tipoDocumento, "Tipo do documento do fiador é obrigatório");
+        Objects.requireNonNull(razaoSocial, "Razão social do fiador é obrigatória");
+
+        requireNonBlank(documento, "Documento do fiador é obrigatório");
+        requireMaxLength(documento, 40, "Documento do fiador");
+        requireRange(tipoDocumento, 1, 99, "Tipo de documento do fiador");
+        requireNonBlank(razaoSocial, "Razão social do fiador é obrigatória");
+        requireMaxLength(razaoSocial, 144, "Razão social do fiador");
+
+        if (tipoDocumento == 3) {
+            requireExactLength(documento, 40, "Documento do fiador (passaporte)");
+        }
+    }
+}

@@ -8,9 +8,16 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 ## [Unreleased]
 
 ### Planejado
-- Publicação no Maven Central
 - Exemplos de integração
 - Mais casos de teste para cenários edge
+
+## [0.0.2] - 2025-11-24
+
+### 🔒 Segurança
+- Validações fail-fast expandidas para todas as classes de domínio e subdomínios (Documento, Endosso, Movimento Prêmio, CCG, ComplAuto, Movimento Sinistro e Sinistro), garantindo presença de campos obrigatórios, limites de tamanho, domínios válidos e consistência temporal.
+
+### ♻️ Refatoração
+- Defensive copies para coleções em agregados aninhados, evitando mutabilidade externa após construção.
 
 ## [0.0.1] - 2025-11-22
 

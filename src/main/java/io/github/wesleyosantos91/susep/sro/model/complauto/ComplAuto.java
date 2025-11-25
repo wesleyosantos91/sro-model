@@ -4,6 +4,7 @@ import io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
+import java.util.Objects;
 
 /**
  * Representa informações complementares de veículos automotores no sistema SRO.
@@ -266,4 +267,14 @@ Campo faz referência ao campo 'identificador do endosso' do bloco endosso do le
      * <p><b>Tipo:</b> Lista de PessoasAssociadasCondutor</p>
      */
     List<PessoasAssociadasCondutor> pessoasAssociadasCondutors
-) {}
+) {
+    public ComplAuto {
+        Objects.requireNonNull(coberturaAutomóvels, "Coberturas de automóvel são obrigatórias");
+        Objects.requireNonNull(franquias, "Franquias são obrigatórias");
+        Objects.requireNonNull(pessoasAssociadasCondutors, "Pessoas associadas são obrigatórias");
+
+        coberturaAutomóvels = List.copyOf(coberturaAutomóvels);
+        franquias = List.copyOf(franquias);
+        pessoasAssociadasCondutors = List.copyOf(pessoasAssociadasCondutors);
+    }
+}

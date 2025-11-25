@@ -326,4 +326,63 @@ public record Endosso(
      * <p><strong>Cardinalidade:</strong> [0..1]</p>
      */
     Cosseguro cosseguro
-) {}
+) {
+
+    private static final Pattern UUID_PATTERN = Pattern.compile(
+        "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    );
+
+    public Endosso {
+        Objects.requireNonNull(uuid, "UUID é obrigatório");
+        Objects.requireNonNull(codigoSeguradora, "Código da seguradora é obrigatório");
+        Objects.requireNonNull(dataRegistro, "Data de registro é obrigatória");
+        Objects.requireNonNull(dataAlteracao, "Data de alteração é obrigatória");
+        Objects.requireNonNull(indicadorExclusao, "Indicador de exclusão é obrigatório");
+        Objects.requireNonNull(tipoEndosso, "Tipo de endosso é obrigatório");
+        Objects.requireNonNull(tipoDocumentoReferenciado, "Tipo de documento é obrigatório");
+        Objects.requireNonNull(apoliceCodigo, "Código da apólice é obrigatório");
+        Objects.requireNonNull(tipoEmissao, "Tipo de emissão é obrigatório");
+        Objects.requireNonNull(dataEmissao, "Data de emissão é obrigatória");
+        Objects.requireNonNull(dataInicio, "Data de início é obrigatória");
+        Objects.requireNonNull(dataTermino, "Data de término é obrigatória");
+        Objects.requireNonNull(codigoFilial, "Código da filial é obrigatório");
+        Objects.requireNonNull(moedaApolice, "Moeda é obrigatória");
+        Objects.requireNonNull(limiteMaximoGarantia, "Limite máximo de garantia é obrigatório");
+        Objects.requireNonNull(limiteMaximoGarantiaReal, "Limite máximo de garantia em reais é obrigatório");
+
+        if (!UUID_PATTERN.matcher(uuid.toLowerCase()).matches()) {
+            throw new IllegalArgumentException("UUID deve estar no formato padrão");
+        }
+
+        ValidationUtils.requireExactLength(codigoSeguradora, 5, "Código da seguradora");
+        ValidationUtils.requireExactLength(codigoFilial, 4, "Código da filial");
+        ValidationUtils.requireMaxLength(anotacao, 500, "Anotação");
+        ValidationUtils.requireMaxLength(apoliceCodigo, 60, "Código da apólice");
+        ValidationUtils.requireMaxLength(numeroSusepApolice, 30, "Número SUSEP");
+        ValidationUtils.requireMaxLength(certificadoCodigo, 60, "Certificado");
+        ValidationUtils.requireExactLength(moedaApolice, 3, "Moeda");
+
+        ValidationUtils.requireRange(indicadorExclusao, 1, 2, "Indicador de exclusão");
+        ValidationUtils.requireRange(tipoDocumentoReferenciado, 1, 11, "Tipo de documento");
+        ValidationUtils.requireRange(tipoEmissao, 1, 2, "Tipo de emissão");
+        ValidationUtils.requirePositive(limiteMaximoGarantia, "Limite máximo de garantia");
+        ValidationUtils.requirePositive(limiteMaximoGarantiaReal, "Limite máximo de garantia em reais");
+
+        ValidationUtils.requirePastOrPresent(dataRegistro, "Data de registro");
+        ValidationUtils.requirePastOrPresent(dataAlteracao, "Data de alteração");
+        ValidationUtils.requirePastOrPresent(dataEmissao, "Data de emissão");
+        ValidationUtils.requireAfterOrEqual(
+            dataTermino,
+            dataInicio,
+            "Data de término deve ser maior ou igual à data de início"
+        );
+
+        ccgs = ccgs != null ? List.copyOf(ccgs) : List.of();
+        segurados = segurados != null ? List.copyOf(segurados) : List.of();
+        beneficiarios = beneficiarios != null ? List.copyOf(beneficiarios) : List.of();
+        tomadores = tomadores != null ? List.copyOf(tomadores) : List.of();
+        intermediarios = intermediarios != null ? List.copyOf(intermediarios) : List.of();
+        objetosSegurados = objetosSegurados != null ? List.copyOf(objetosSegurados) : List.of();
+        endossosAssociados = endossosAssociados != null ? List.copyOf(endossosAssociados) : List.of();
+    }
+}

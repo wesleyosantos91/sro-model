@@ -2,6 +2,14 @@ package io.github.wesleyosantos91.susep.sro.model.complauto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
+
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireExactLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireMaxLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireNonBlank;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requirePastOrPresent;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requirePositive;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireRange;
 
 /**
  * Representa Cobertura Automóvel no contexto de COMPL_AUTO.
@@ -273,4 +281,48 @@ Utilizar esse número para os casos em que não houver processo</p>
      * <p><b>Tamanho:</b> 2</p>
      */
     Integer coberturaVinculada
-) {}
+) {
+    public CoberturaAutomóvel {
+        requireNonBlank(grupoRamo, "Grupo e ramo é obrigatório");
+        Objects.requireNonNull(codigo, "Código da cobertura é obrigatório");
+        requireNonBlank(coberturaInternaSeguradora, "Cobertura interna é obrigatória");
+        requireNonBlank(numeroProcesso, "Número do processo é obrigatório");
+        Objects.requireNonNull(limiteMaximoIndenizacao, "Limite máximo de indenização é obrigatório");
+        Objects.requireNonNull(limiteMaximoIndenizacaoReal, "Limite máximo de indenização em reais é obrigatório");
+        Objects.requireNonNull(dataInicio, "Data de início é obrigatória");
+        Objects.requireNonNull(dataTermino, "Data de término é obrigatória");
+        Objects.requireNonNull(coberturaPrincipal, "Cobertura principal é obrigatória");
+        Objects.requireNonNull(coberturaCaracteristica, "Característica da cobertura é obrigatória");
+        Objects.requireNonNull(coberturaTipo, "Tipo da cobertura é obrigatório");
+        Objects.requireNonNull(valorPremio, "Valor do prêmio é obrigatório");
+        Objects.requireNonNull(valorPremioReal, "Valor do prêmio em reais é obrigatório");
+
+        requireExactLength(grupoRamo, 4, "Grupo e ramo");
+        requireRange(coberturaPrincipal, 1, 2, "Cobertura principal");
+        requireRange(coberturaCaracteristica, 1, 99, "Característica da cobertura");
+        requireRange(coberturaTipo, 1, 99, "Tipo da cobertura");
+        requirePositive(limiteMaximoIndenizacao, "Limite máximo de indenização");
+        requirePositive(limiteMaximoIndenizacaoReal, "Limite máximo de indenização em reais");
+        requirePositive(valorPremio, "Valor do prêmio");
+        requirePositive(valorPremioReal, "Valor do prêmio em reais");
+
+        requireMaxLength(outrasDescricao, 500, "Descrição da cobertura");
+        requireMaxLength(coberturaInternaSeguradora, 50, "Cobertura interna da seguradora");
+        requireMaxLength(numeroProcesso, 50, "Número do processo");
+        requireMaxLength(placaVeiculo, 7, "Placa do veículo");
+        requireMaxLength(chassiVeiculo, 17, "Chassi do veículo");
+        requireMaxLength(renavamVeiculo, 11, "RENAVAM");
+        requireMaxLength(ufLicenciamento, 2, "UF de licenciamento");
+        requireMaxLength(identificadorOutros, 50, "Identificador de outros veículos");
+        requireMaxLength(cpfCondutor, 11, "CPF do condutor");
+        requireMaxLength(codigoPostalOcorrencia, 30, "Código postal da ocorrência");
+        requireMaxLength(codigoMunicipioOcorrencia, 7, "Município da ocorrência");
+        requireMaxLength(diasCobertura, 4, "Dias de cobertura");
+
+        if (dataTermino.isBefore(dataInicio)) {
+            throw new IllegalArgumentException("Data de término deve ser igual ou posterior ao início");
+        }
+        requirePastOrPresent(dataInicio, "Data de início da cobertura");
+        requirePastOrPresent(dataTermino, "Data de término da cobertura");
+    }
+}

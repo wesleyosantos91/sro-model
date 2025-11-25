@@ -1,8 +1,10 @@
 package io.github.wesleyosantos91.susep.sro.model.movimentosinistro;
 
+import io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Representa movimentos financeiros relacionados a sinistros no sistema SRO.
@@ -344,4 +346,46 @@ Exemplo ( "BRL", "USD", "EUR", "GBP", "JPY")</p>
      * <p><b>Tipo:</b> Lista de Adicionais</p>
      */
     List<Adicionais> adicionais
-) {}
+) {
+
+    public MovimentoSinistro {
+        ValidationUtils.requireNonBlank(codigoSeguradora, "Código da seguradora é obrigatório");
+        ValidationUtils.requireNonBlank(grupoRamo, "Grupo e ramo são obrigatórios");
+        ValidationUtils.requireNonBlank(codigoSinistro, "Código do sinistro é obrigatório");
+        ValidationUtils.requireNonBlank(identificadorMovimento, "Identificador do movimento é obrigatório");
+        ValidationUtils.requireNonBlank(apoliceCodigo, "Código da apólice é obrigatório");
+        Objects.requireNonNull(valorMovimento, "Valor do movimento é obrigatório");
+        Objects.requireNonNull(valorMovimentoReais, "Valor do movimento em reais é obrigatório");
+        ValidationUtils.requireNonBlank(moeda, "Moeda é obrigatória");
+        Objects.requireNonNull(tipoSinistro, "Tipo do sinistro é obrigatório");
+        Objects.requireNonNull(tipoMovimento, "Tipo de movimento é obrigatório");
+        Objects.requireNonNull(indicadorExclusao, "Indicador de exclusão é obrigatório");
+        ValidationUtils.requireNonBlank(uuid, "UUID é obrigatório");
+        Objects.requireNonNull(dataMovimento, "Data do movimento é obrigatória");
+        Objects.requireNonNull(dataRegistro, "Data de registro é obrigatória");
+        Objects.requireNonNull(dataAlteracao, "Data de alteração é obrigatória");
+
+        ValidationUtils.requireExactLength(codigoSeguradora, 5, "Código da seguradora");
+        ValidationUtils.requireExactLength(grupoRamo, 4, "Grupo e ramo");
+        ValidationUtils.requireMaxLength(codigoSinistro, 50, "Código do sinistro");
+        ValidationUtils.requireMaxLength(identificadorMovimento, 80, "Identificador do movimento");
+        ValidationUtils.requireMaxLength(apoliceCodigo, 60, "Código da apólice");
+        ValidationUtils.requireMaxLength(certificadoCodigo, 60, "Certificado");
+        ValidationUtils.requireMaxLength(numeroEndosso, 60, "Endosso");
+        ValidationUtils.requireExactLength(moeda, 3, "Moeda");
+        ValidationUtils.requireMaxLength(anotacao, 500, "Anotação");
+
+        ValidationUtils.requireRange(tipoSinistro, 1, 2, "Tipo de sinistro");
+        ValidationUtils.requireRange(tipoMovimento, 1, 10, "Tipo de movimento");
+        ValidationUtils.requireRange(indicadorExclusao, 1, 2, "Indicador de exclusão");
+
+        ValidationUtils.requirePositive(valorMovimento, "Valor do movimento");
+        ValidationUtils.requirePositive(valorMovimentoReais, "Valor do movimento em reais");
+
+        ValidationUtils.requirePastOrPresent(dataMovimento, "Data do movimento");
+        ValidationUtils.requirePastOrPresent(dataRegistro, "Data de registro");
+        ValidationUtils.requirePastOrPresent(dataAlteracao, "Data de alteração");
+
+        adicionais = adicionais != null ? List.copyOf(adicionais) : List.of();
+    }
+}

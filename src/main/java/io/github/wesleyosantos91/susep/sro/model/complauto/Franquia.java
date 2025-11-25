@@ -1,6 +1,11 @@
 package io.github.wesleyosantos91.susep.sro.model.complauto;
 
 import java.math.BigDecimal;
+import java.util.Objects;
+
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireMaxLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requirePositive;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireRange;
 
 /**
  * Representa Franquia no contexto de COMPL_AUTO.
@@ -74,4 +79,14 @@ Ampliação de tamanho do campo</p>
      * <p><b>Tamanho:</b> 1</p>
      */
     Integer franquiaIndenizacaoIntegral
-) {}
+) {
+    public Franquia {
+        Objects.requireNonNull(franquiaTipo, "Tipo de franquia é obrigatório");
+
+        requireRange(franquiaTipo, 1, 99, "Tipo de franquia");
+        requireMaxLength(tipoDescricao, 1000, "Descrição do tipo de franquia");
+        requirePositive(franquiaValor, "Valor da franquia");
+        requireMaxLength(franquiaDescricao, 500, "Descrição da franquia");
+        requireRange(franquiaIndenizacaoIntegral, 1, 2, "Franquia de indenização integral");
+    }
+}

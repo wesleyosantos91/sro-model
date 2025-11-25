@@ -1,5 +1,10 @@
 package io.github.wesleyosantos91.susep.sro.model.documento;
 
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireExactLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireMaxLength;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requirePositive;
+import static io.github.wesleyosantos91.susep.sro.model.util.ValidationUtils.requireRange;
+
 /**
  * Record representando ObjetoRural
  * <p>Tag: objeto_rural</p>
@@ -137,4 +142,22 @@ public record ObjetoRural(
      * <p><strong>Observação:</strong> Fórum Ofício 9</p>
      */
     Float percentualDespesasAdministrativas
-) {}
+) {
+    public ObjetoRural {
+        requireRange(participaFesr, 1, 2, "Participação no FESR");
+        requireRange(unidadeMedidaAreaSegurada, 1, 99, "Unidade de medida da área segurada");
+        requireRange(codigoRebanho, 1, 99, "Código do rebanho");
+        requireRange(codigoFloresta, 1, 99, "Código da floresta");
+        requireRange(destinacaoAnimalCobertoPecuario, 1, 99, "Destinação dos animais");
+        requireRange(classificacaoAnimalCoberto, 1, 99, "Classificação dos animais");
+
+        requirePositive(valorPremioSubvencionado, "Valor do prêmio subvencionado");
+        requirePositive(areaSeguradaTotal, "Área segurada total");
+
+        requireMaxLength(origemSubvencao, 2, "Origem da subvenção");
+        requireMaxLength(codigoCultura, 8, "Código da cultura");
+        requireMaxLength(ufVistoria, 2, "UF da vistoria");
+        requireMaxLength(codigoPostalVistoria, 30, "Código postal da vistoria");
+        requireExactLength(paisVistoria, 3, "País da vistoria");
+    }
+}
